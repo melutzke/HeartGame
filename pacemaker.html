@@ -612,13 +612,27 @@ scorebar.src = "./Images/scorebar.jpg";
 
 //Syntax for buttons --> What Gamestate it is at _ What Gamestate it is going to
 //GAMESTATE_START
+
+Button_Start_Play = new Button(500, 250, 100, 30, "Play Game", ctx);
 Button_Start_Options = new Button(500, 350, 100, 30, "Options", ctx);
 Button_Start_Credits = new Button(500, 450, 100, 30, "Credz", ctx);
-Button_Start_Play = new Button(500, 250, 100, 30, "Play Game", ctx);
+
 //GAMESTATE_GAMEPLAY
-Button_Gameplay_Reset = new Button(650, 10, 120, 30, "Reset Game", ctx);
+Button_Gameplay_Reset = new Button(650, 10, 100, 30, "Reset Game", ctx);
 Button_Gameplay_Options = new Button(750, 10, 100, 30, "Options", ctx);
+
+
 //GAMESTATE_OPTIONS
+
+
+
+Button_Options_MainMenu = new Button(500, 500, 100, 30, "Main Menu", ctx);
+
+
+
+
+
+
 //GAMESTATE_CREDITS
 
 
@@ -854,13 +868,17 @@ function draw_world() {
 		Button_Start_Credits.draw();
 		Button_Start_Play.draw();
 
+
 		if(Button_Start_Play.clicked()){
 			PlayerGame.state = GAMESTATE_GAMEPLAY;
-		}
+					
+		}	
+	}else if(PlayerGame.state == GAMESTATE_CREDITS){
+		
+		
+		
+		
 	}
-
-	
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////// IGNORE THESE
