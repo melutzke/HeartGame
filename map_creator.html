@@ -8,7 +8,8 @@ var platforms = new Array();
 var num_collisions = 0;
 
 var blocksWidth		= parseInt(prompt("Enter how many blocks wide", ""));
-var blocksHeight	= parseInt(prompt("Enter how many blocks tall", ""));
+var blocksHeight	= parseInt(prompt("Enter how many blocks tall\n13 is recommended for PaceMaker", ""));
+alert("1 - 5 to select your tile.\nLeft Click Adds. Right Click Removes.\nShift to display array. ");
 
 var gameWidth = blocksWidth * 50;
 var gameHeight = blocksHeight * 50;
@@ -135,24 +136,22 @@ function mouse_press(event) {
 
 function key_event(event) {
 	switch(event.keyCode){
-		case 32:				Controller.space = true;	break;		// space
 		case 16:				Controller.shift = true;	break;		// shift
-		case 39: case 68:		Controller.right = true;	break;		// right
-		case 37: case 65:		Controller.left = true;		break;		// left
-		case 38: case 87:		Controller.up = true; 		break;		// up
-		case 40: case 83:		Controller.down = true;		break;		// down
+		case 53: 				Controller.five = true;		break;		// right
+		case 52:				Controller.four = true;		break;		// left
+		case 51:				Controller.three = true; 	break;		// up
+		case 50:				Controller.two = true;		break;		// down
 		case 49:  				Controller.one = true;		break;		// 1
 	}
 }
 
 function key_event_up(event) {
 	switch(event.keyCode){
-		case 32:				Controller.space = false;	break;		// space
 		case 16:				Controller.shift = false;	break;		// shift
-		case 39: case 68:		Controller.right = false;	break;		// right
-		case 37: case 65:		Controller.left = false;	break;		// left
-		case 38: case 87:		Controller.up = false; 		break;		// up
-		case 40: case 83:		Controller.down = false;	break;		// down
+		case 53: 				Controller.five = false;	break;		// right
+		case 52:				Controller.four = false;	break;		// left
+		case 51:				Controller.three = false; 	break;		// up
+		case 50:				Controller.two = false;		break;		// down
 		case 49:  				Controller.one = false;		break;		// 1
 	}
 }
@@ -238,13 +237,15 @@ function begin_game() {
 
 function frame(){
 
-
+	//Figures out which tile is clicked; if valid, adds selected tile to the map
 	if(Controller.mouse_left){
 		x_tile = Math.floor(x/50);
 		y_tile = Math.floor(y/50);
 		if(y_tile < blocksHeight && x_tile < blocksWidth)
 		map[y_tile][x_tile] = blockChoice;
 	}
+
+	//Figures out which tile is clicked; if valid, removes tile from the map
 	if(Controller.mouse_right){
 		x_tile = Math.floor(x/50);
 		y_tile = Math.floor(y/50);
@@ -253,10 +254,19 @@ function frame(){
 	}
 
     if(Controller.one){
-	updateBlockChoice(2);
+		updateBlockChoice(1);
     }
-    if(Controller.left){
+    else if(Controller.two){
+    	updateBlockChoice(2);
+    }
+	else if(Controller.three){
     	updateBlockChoice(3);
+    }
+    else if(Controller.four){
+    	updateBlockChoice(4);
+    }
+    else if(Controller.five){
+    	updateBlockChoice(5);
     }
 
 
@@ -294,13 +304,6 @@ function draw_world() {
 	var canvas = document.getElementById("draw_canvas");
 	if (canvas.getContext) {
 		
-		
-		// DEBUGGING, draws a large number of rectangles
-		// for performance testing
-		
-		
-
-		
 		ctx = canvas.getContext("2d");
 
 		Grass = new Platform();
@@ -318,21 +321,20 @@ function draw_world() {
 		Grass.image.src = "./Images/grass_tile.png";
 		Block.image.src = "./Images/platform.png";
 		Spike.image.src = "./Images/spike_pit.png";
-		Blood.image.src 	= "./Images/redbloodcell.png";
+		Blood.image.src = "./Images/redbloodcell.png";
 		Enemy.image.src = "./Images/generic_enemy_placeholder.gif";
 
-		// draw out the map
-		
+		// Draws out the map based on the values in the map array.
 		for(var i = 0; i<map.length; i++){
 			for(var k = 0; k<map[i].length; k++){
 				if(map[i][k]==1){
-					ctx.drawImage(Grass.image, k*50, i*50);
+					ctx.drawImage(Blood.image, k*50, i*50);
 				}
 				if(map[i][k]==2){
 					ctx.drawImage(Block.image, k*50, i*50);
 				}
 				if(map[i][k]==3){
-					ctx.drawImage(Blood.image, k*50, i*50);
+					ctx.drawImage(Enemy.image, k*50, i*50);
 				}
 				if(map[i][k]==4){
 					ctx.drawImage(Spike.image, k*50, i*50);
@@ -360,10 +362,6 @@ function draw_world() {
   			ctx.stokeStyle = "rgb(0,0,0)";
 		}
 
-
-
-
-
 		var thisFrameFPS = 1000 / ((now=new Date) - lastUpdate);
 		var lastfps = fps;
 		fps += (thisFrameFPS - fps) / fpsFilter;
@@ -377,9 +375,7 @@ function draw_world() {
 		fpsControl = 1;
 		// doing this until I can sort out the fps issues            
 		//fpsControl = 1;
-		
-		
-		
+			
 	}
 }
 
@@ -393,15 +389,6 @@ window.addEventListener('mousedown', mouse_down, false);
 <body  onload="page_load()">
 
 <canvas onmousemove="mouse_move(event)" onmousedown="mouse_press(event)" id="draw_canvas"  oncontextmenu="return false;" width="100%"></canvas>
-
-<div style="position: fixed; bottom: 100px; left: 50px; width: 400px; background-color: #FFFFFF; height: 100px; border: 1px solid black;">
-	<img src="./Images/grass_tile.png" width="50" 				onclick="updateBlockChoice(1);" />
-	<img src="./Images/platform.png" width="50"  				onclick="updateBlockChoice(2);" />
-	<img src="./Images/redbloodcell.png" width="50"				onclick="updateBlockChoice(3);" />
-	<img src="./Images/spike_pit.png" width="50"  				onclick="updateBlockChoice(4);" />
-	<img src="./Images/generic_enemy_placeholder.gif" width="50" onclick="updateBlockChoice(5);" />
-</div>
-
 
 <script type="text/javascript">
 	gameCanvas = document.getElementById("draw_canvas");
