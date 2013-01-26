@@ -18,6 +18,7 @@ var x_check;
 var y_check;
 var collectable = new Array();
 var grav_const = 1;
+var gamepadSupport = true;
 
 var debug = true;
 var grid = false;
@@ -34,6 +35,8 @@ var thisFrameFPS = 0;
 var windowActive = true;
 var startScreen   = new Image();
 var optionsScreen = new Image();
+
+var gamepad = new Gamepad();
 
 var creditScreen1      = new Image();
 var creditScreen2      = new Image();
@@ -96,6 +99,107 @@ background2.src = 			"./Images/test_background2.png";
 	////////////////////////////////////////////////////////////////////////////////////////// SETTING THINGS UP INITIALLY
 function begin_game() {
 
+
+
+
+	Controller = new Control();
+
+
+
+
+
+
+
+
+
+gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
+    // a new gamepad connected
+});
+
+gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {
+    // gamepad disconnected
+});
+
+gamepad.bind(Gamepad.Event.UNSUPPORTED, function(device) {
+    // an unsupported gamepad connected (add new mapping)
+});
+
+/*
+gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
+    // gamepads were updated (around 60 times a second)
+
+	for (control in gamepads[0].state) {
+		//value = gamepads[i].state[control];
+		
+		if(gamepads[0].state['A'] && !Controller.space){
+			Controller.space = true;
+		} else if(gamepadSupport){
+			Controller.space = false;
+		}
+
+		if(gamepads[0].state['X'] && !Controller.shift){
+			Controller.shift = true;
+		} else if(gamepadSupport) {
+			Controller.shift = false;
+		}
+
+		if(gamepads[0].state['DPAD_LEFT'] && !Controller.left){
+			Controller.left = true;
+		} else if(gamepadSupport) {
+			Controller.left = false;
+		}
+
+		if(gamepads[0].state['DPAD_RIGHT'] && !Controller.right){
+			Controller.right = true;
+		} else if(gamepadSupport) {
+			Controller.right = false;
+		}
+
+		if(gamepads[0].state['DPAD_UP'] && !Controller.up){
+			Controller.up = true;
+		} else if(gamepadSupport) {
+			Controller.up = false;
+		}
+
+		if(gamepads[0].state['DPAD_DOWN'] && !Controller.down){
+			Controller.down = true;
+		} else if(gamepadSupport) {
+			Controller.down = false;
+		}
+	}
+
+
+
+});
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+if (!gamepad.init()) {
+    gamepadSupport = false;
+}
+
+
+
+console.log(gamepad);
+
+
+
+
+
+
+
+
+
 	canvas = document.getElementById("draw_canvas");
 	ctx = canvas.getContext("2d");
 
@@ -105,18 +209,12 @@ function begin_game() {
 	CurrPlayer = new Player(50, 300);				// (x-position, y-position)
 
 	Grass = new Platform();
-	Grass.imageArray = new Array();
-	Grass.imageArray[0] = new Image();
-	Grass.imageArray[0].src = "./Images/grass_tile.png";
-	Grass.imageArray[1] = new Image();
-	Grass.imageArray[1].src = "./Images/grass_tile2.png";
+	Grass.image = new Image();
+	Grass.image.src = "./Images/grass_tile.png";
 
 	Dirt = new Platform();
-	Dirt.imageArray = new Array();
-	Dirt.imageArray[0] = new Image();
-	Dirt.imageArray[0].src = "./Images/ground_tile.png";
-	Dirt.imageArray[1] = new Image();
-	Dirt.imageArray[1].src = "./Images/ground_tile2.png";
+	Dirt.image = new Image();
+	Dirt.image.src = "./Images/ground_tile.png";
 
 	Block = new Platform();
 	Block2 = new Platform();
@@ -164,51 +262,18 @@ function begin_game() {
 
 	for(var i = 0; i<map.length; i++){
 		for(var k = 0; k<map[i].length; k++){
-			
-
-
-			// This fucking terrible mess draws the tiles, it looks like shit due to auto-tiling. If we dont
-			// do tiling this will literally be like 4 if statements
 
 
 				if(map[i][k]==1){
-					if(i-1>=0){
-						if(map[i-1][k]==1){
-							imageMap[i][k] = Dirt.imageArray[Math.floor(Math.random()*Dirt.imageArray.length)]
-						} else {
-							imageMap[i][k] = Grass.imageArray[Math.floor(Math.random()*Grass.imageArray.length)];
-						}
-					} else {
-						imageMap[i][k] = Grass.imageArray[Math.floor(Math.random()*Grass.imageArray.length)];
-					}
+					imageMap[i][k] = Dirt.image;
 				}
 				// handle blue platforms
 				if(map[i][k]==2){
-					if(i-1>0 && i+1<map.length){
-						if(map[i-1][k]==2 || map[i+1][k]==2){
-							if(map[i-1][k] != 2){
-								imageMap[i][k] = Block.image;
-							} else {
-								imageMap[i][k] = Block3.image;
-							}
-						} else {
-							imageMap[i][k] = Block2.image;
-						}
-					} else {
-						imageMap[i][k] = Block3.image;
-					}
+					imageMap[i][k] = Block.image;
 				}
 				// handle spikes and their tiling
 				if(map[i][k]==4){
-					if(i-1>=0){
-						if(map[i-1][k]==4){
-							imageMap[i][k] = SpikeColumn.image;
-						} else {
-							imageMap[i][k] = Spike.image;
-						}
-					} else {
-						imageMap[i][k] = Spike.image;
-					}
+					imageMap[i][k] = Spike.image;
 				}
 			
 		if(imageMap[i][k] == undefined) imageMap[i][k] = null;
