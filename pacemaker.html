@@ -196,7 +196,7 @@ function Player(x_pos, y_pos) {
 		
 
 			//////////////////////////////////////////////////////////////////////////////////////////  DETERMINE IF TO MOVE SCREEN?
-		if(this.x >= 450 && this.x_dir == 1){
+		if(this.x >= 350 && this.x_dir == 1){
 			// move platforms
 			platform_x_movement -= this.x_dir * this.x_speed*fpsControl;
 			platform_update = -1 * this.x_dir * this.x_speed*fpsControl;
@@ -560,10 +560,6 @@ function mouse_down(event) {
 		case 2: Controller.mouse_middle = true; break;
 		case 3: Controller.mouse_right = true; break;
 	}
-}
-
-function datpasta(){
-	alert("pasta");
 }
 
 	////////////////////////////////////////////////////////////////////////////////////////// SETTING THINGS UP INITIALLY
