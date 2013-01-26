@@ -8,15 +8,11 @@
 <script type = "text/javascript" src="./rendering.js"></script>
 <script type = "text/javascript">
 
-
-
 var fps = 60, now, lastUpdate = (new Date)*1 - 1, fpsControl = 1, x, y;
 
 // The higher this value, the less the FPS will be affected by quick changes
 // Setting this to 1 will show you the FPS of the last sampled frame only
 var fpsFilter = 10;
-
-
 
 	////////////////////////////////////////////////////////////////////////////////////////// UPDATE PLATFORM X POS (makes screen movement work)
 function update_platforms(x_change){
@@ -24,7 +20,6 @@ function update_platforms(x_change){
 		platforms[i].x += x_change;
 	}
 }
-
 		
 function Control() {
 	this.space = false;
@@ -49,7 +44,6 @@ function gamepadConnected(evt)
 }
 window.addEventListener('MozGamepadConnected', gamepadConnected);
 		////////////////////////////////////////////////////////////////////////////////////////// PLATFORMS CLASS
-
 	
 function onFocus(){
 	windowActive = true;
