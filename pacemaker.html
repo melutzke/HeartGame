@@ -573,6 +573,7 @@ ctx = canvas.getContext("2d");
 
 Controller = new Control();
 PlayerGame = new Game(ctx, gameWidth, gameHeight, 10);		// (context, x_boundary, y_boundary, ms_delay)
+PlayerGame.clearColor = "rgb(135,206,235)";
 CurrPlayer = new Player(50, 300);				// (x-position, y-position)
 
 Grass = new Platform();
@@ -605,7 +606,7 @@ Block3.image.src 	  = "./Images/platform_underneath.png";
 Spike.image.src 	  = "./Images/spike_pit.png";	
 SpikeColumn.image.src = "./Images/spike_lower.png";
 
-CurrPlayer.image.src  = "./Images/char_small.gif";
+CurrPlayer.image.src  = "./Images/bucky_small.gif";
 scorebar = new Image();
 scorebar.src = "./Images/scorebar.jpg";
 
@@ -732,15 +733,7 @@ function frame(){
 
 	if(Controller.down) CurrPlayer.dead = false;
 
-	alpha = 1;
-	if(collectable_count>10){
-		alpha = (20/collectable_count);
-	}
-	if(alpha < 0.3){
-		alpha = 0.3;
-	}
-
-		PlayerGame.clearColor = "rgba(135,206,235," + alpha + ")";
+		
 
 	if(document.activeElement.id == "draw_canvas" && windowActive){
 		///////////////////////////////////////////////////////////////////////////////////// UPDATE DAT BUCKY
@@ -752,12 +745,12 @@ function frame(){
 	gametimeout = setTimeout(frame, 5);
 	draw_world();
 
-	thisFrameFPS = 1000 / ((now=new Date) - lastUpdate);
 
+	// IGNORE FRAME STUFF, it is used for accurate movement / fps counter
+	thisFrameFPS = 1000 / ((now=new Date) - lastUpdate);
 	if(thisFrameFPS < 10){
 		thisFrameFPS = 60;
 	}
-
 	lastfps = fps;
 	fps += (thisFrameFPS - fps) / fpsFilter;
 	if(isNaN(fps)){
@@ -765,7 +758,6 @@ function frame(){
 		fps = 60;
 	}
 	lastUpdate = now;
-	  
 	fpsControl = 60/thisFrameFPS;
 	fpsWave = 60/thisFrameFPS;
 }
@@ -776,7 +768,7 @@ function draw_world() {
 	var canvas = document.getElementById("draw_canvas");
 
 
-	if (PlayerGame.state == GAMEPLAY) {
+	if (PlayerGame.state == GAMESTATE_GAMEPLAY) {
 
 
 
@@ -838,7 +830,7 @@ function draw_world() {
 
 		////////////////////////////////////////////////////////////////////////////////////////// SPLASH SCREEN IF-BLOCK
 
-	} /*else if(BuckyGame.state == GAMESTATE_CREDITS){
+	} /*else if(PlayerGame.state == GAMESTATE_CREDITS){
 
 		ctx.drawImage(splashImage, -50, -50);
 		PlayButton.draw();
@@ -848,14 +840,14 @@ function draw_world() {
 			PlayerGame.state = GAMEPLAY;
 
 		}
-	} */else if(BuckyGame.state == GAMESTATE_START){
+	} */else if(PlayerGame.state == GAMESTATE_START){
 		ctx.drawImage(splashImage, -50, -50);
 		OptionsButton.draw();
 		CreditsButton.draw();
 		PlayButton.draw();
 		if(Controller.click_mouse_y <= PlayButton.y+PlayButton.height && Controller.click_mouse_y >= PlayButton.y
 			&& Controller.click_mouse_x <= PlayButton.x+PlayButton.width && Controller.click_mouse_x >=PlayButton.x){
-			BuckyGame.state = GAMESTATE_GAMEPLAY;
+			PlayerGame.state = GAMESTATE_GAMEPLAY;
 		}
 	}
 }
