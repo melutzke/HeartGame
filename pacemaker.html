@@ -50,6 +50,7 @@ background.src = 			"./Images/test_background.jpg";
 
 startScreen.src = 			"./Images/start_screen.fw.png";
 
+
 background2.src = 			"./Images/test_background2.png";
 
 
@@ -838,16 +839,16 @@ function draw_world() {
 
 		////////////////////////////////////////////////////////////////////////////////////////// SPLASH SCREEN IF-BLOCK
 
-	} /*else if(PlayerGame.state == GAMESTATE_CREDITS){
+	} else if(PlayerGame.state == GAMESTATE_OPTIONS){
 
-		ctx.drawImage(startScreen, -50, -50);
-		Button_Start_Play.draw();
+		ctx.drawImage(optionsScreen, 0, 0);
+		//Button_Start_Play.draw();
 
-		if(Button_Start_Play.clicked()){
-			PlayerGame.state = GAMESTATE_GAMEPLAY;
-		}
+		//if(Button_Start_Play.clicked()){
+		//	PlayerGame.state = GAMESTATE_GAMEPLAY;
+		//}
 
-	} */else if(PlayerGame.state == GAMESTATE_START){
+	} else if(PlayerGame.state == GAMESTATE_START){
 		ctx.drawImage(startScreen, 0, 0);
 		Button_Start_Options.draw();
 		Button_Start_Credits.draw();
@@ -857,6 +858,9 @@ function draw_world() {
 			PlayerGame.state = GAMESTATE_GAMEPLAY;
 		}
 	}
+
+	
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////// IGNORE THESE
