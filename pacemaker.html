@@ -170,7 +170,7 @@ function Player(x_pos, y_pos) {
 		}
 
 
-		if(!this.dead){
+		if(!this.dead && !Controller.p){
 
 			// jump toggle used to prevent double jumps
 			if(!Controller.space){
@@ -879,6 +879,7 @@ function draw_world() {
 		Button_Options_Start.draw();
 
 		if(Button_Options_Start.clicked()){
+			PlayerGame.resetGame();              //reset the game so that you don't start a game at your previous progress/death
 			PlayerGame.state = GAMESTATE_START;
 		}
 
