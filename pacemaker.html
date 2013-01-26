@@ -11,7 +11,6 @@ var GAMESTATE_CREDITS = 3;
 
 
 var background = new Image();
-var beerTotal = 0;
 var blocksize = 25;
 var collectable_count = 0;
 var char_left = new Image();
@@ -23,13 +22,10 @@ var char_right_second = new Image();
 var x_check;
 var y_check;
 var collectable = new Array();
+
 var debug = false;
-var drunk_max = 0;
-var drunkness = 0;
-var drunkness_increase = 0.1;
-var dy = 0;
 var grid = false;
-var enemies = new Array();
+
 var fpsWave = 60;
 var gameHeight = 600;
 var gameWidth = 1200;
@@ -40,12 +36,9 @@ var num_collisions = 0;
 var platform_x_movement = 0;
 var platforms = new Array();
 var platform_update = 0;
-var post_processing_disabled = false;
-var sine_addition = 0;
 var thisFrameFPS = 0;
 var windowActive = true;
 var splashImage = new Image();
-var timers = new Array();
 
 
 char_right_jump.src = 		"./Images/bucky_right_jump.gif";
@@ -450,23 +443,16 @@ function Game(ctx, x_boundary, y_boundary, frame_delay){
 	this.resetGame = resetGame;
 			////////////////////////////////////////////////////////////////////////////////////// RESET GAME
 	function resetGame(){
-		beerTotal = 0;
+		collectable_count = 0;
 		collectable_count = 0;
 		collectable = new Array();
-		drunk_max = 0;
-		drunkness = 0;
-		drunkness_increase = 0.1;
-		dy = 0;
-		enemies = new Array();
 		imageMap = null;
 		lastfps = 0;
 		platform_x_movement = 0;
 		platforms = new Array();
 		platform_update = 0;
-		sine_addition = 0;
 		begin_game();
 		clearTimeout(gametimeout);
-		window.cancelRequestAnimationFrame();
 	}
 }
 
