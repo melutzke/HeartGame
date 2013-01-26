@@ -175,10 +175,10 @@ function Player(x_pos, y_pos) {
 			this.y_dir = -1;
 		}
 
-		if(this.y_speed > 5  && !this.grounded && !this.grounded_last_frame && !Controller.space  && this.y_dir == -1 && !this.deathAnimToggle){
-			this.y_speed = 5;
-			new_y_speed = 0;
-		}
+		//if(this.y_speed > 5  && !this.grounded && !this.grounded_last_frame && !Controller.space  && this.y_dir == -1 && !this.deathAnimToggle){
+		//	this.y_speed = 5;
+		//	new_y_speed = 0;
+		//}
 
 		if(new_y_speed * fpsControl > 20){
 			this.y += 20;
