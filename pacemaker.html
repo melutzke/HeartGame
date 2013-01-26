@@ -129,6 +129,7 @@ function Player(x_pos, y_pos) {
 		this.y_dir = 0;
 		this.x_dir = 0;
 
+		// Perform death animation
 		if(this.dead && !this.deathAnimToggle){
 			this.deathAnimToggle = true
 			//this.x_speed = 0;
@@ -141,32 +142,42 @@ function Player(x_pos, y_pos) {
 
 		}
 
+		// If below the game, you should be dead
 		if(this.y > gameHeight){
 			this.dead = true;
 		}
 
-		if(!this.dead && !Controller.p){
 
+		if(!this.dead){
+
+			// jump toggle used to prevent double jumps
 			if(!Controller.space){
 				this.jump_hold_toggle = false;
 			}
 			
+			// set x dir
 			if(Controller.left){
 				this.x_dir = -1;	
 			}
 			if(Controller.right){
 				this.x_dir = 1;
 			}
+
+			// if space is pressed, and we're grounded, and the jump toggle is fine, jump
 			if(Controller.space && (this.grounded || this.grounded_last_frame) && !this.jump_hold_toggle){
 				this.y_dir = -1;
 				this.y_speed = 18;
-				this.jump_hold_toggle = true;
+				this.jump_hold_toggle = true;	// set jump toggle to disable double jumping
 			}
+
+			// if shift is pressed, go SANIC SPEED
 			if(Controller.shift){
 				this.x_speed = 10;
 			} else {
 				this.x_speed = 3;
 			}
+
+			// if neither left nor right is pressed, set direction and speed to zero to prevent movement
 			if(!Controller.left && !Controller.right){
 				this.x_dir = 0;
 				this.x_speed = 0;
@@ -174,28 +185,21 @@ function Player(x_pos, y_pos) {
 		
 		}
 		
+		// calc new y speed based on gravity and possible jump
 		new_y_speed = -1 * Math.floor(this.y_speed) + Math.pow(this.airtime, 2);
 
+		// set y_dir based on y speed, you can ignore this
 		if(new_y_speed > 0){
 			this.y_dir = 1;
 		} else {
 			this.y_dir = -1;
 		}
 
-		//if(this.y_speed > 5  && !this.grounded && !this.grounded_last_frame && !Controller.space  && this.y_dir == -1 && !this.deathAnimToggle){
-		//	this.y_speed = 5;
-		//	new_y_speed = 0;
-		//}
+		// set new y position
+		this.y += new_y_speed * fpsControl;
 
-		if(new_y_speed * fpsControl > 20){
-			this.y += 20;
-		} else {
-			this.y += new_y_speed * fpsControl;
-		}
 
-		
-
-			//////////////////////////////////////////////////////////////////////////////////////////  DETERMINE IF TO MOVE SCREEN?
+		// if we've moved too far from the left edge, scroll screen instead of character
 		if(this.x >= 350 && this.x_dir == 1){
 			// move platforms
 			platform_x_movement -= this.x_dir * this.x_speed*fpsControl;
@@ -216,6 +220,7 @@ function Player(x_pos, y_pos) {
 				this.distance_since_sprite_change += this.x_speed*fpsControl;
 			}
 
+		// if we didn't have to scroll all the platforms, move bucky
 		} else {
 			platform_update = 0;
 			this.x += this.x_dir * this.x_speed*fpsControl;
@@ -225,10 +230,12 @@ function Player(x_pos, y_pos) {
 			}
 		}
 
+		// if you fall quite a bit off the screen, stop infinite falling to prevent integer wrap around
 		if(this.y>gameHeight-this.height + 500){
 			this.y=gameHeight-this.height + 500;
 		}
 
+		// if you haven't collided increase counter that tracks "air time" by arbitrary .24 amount
 		if(!this.collision){
 			this.airtime += 0.24*fpsControl;
 		} 
@@ -239,7 +246,7 @@ function Player(x_pos, y_pos) {
 		}
 		
 
-
+		// loop through each collectable item. If the dist between it and character is small, collect it
 		for(var i = 0; i<collectable.length; i++){
 			if(distanceBetween(this, collectable[i]) < 30){
 				collectable[i].hidden = true;
@@ -248,29 +255,14 @@ function Player(x_pos, y_pos) {
 			}
 		}
 
-
-		if(this.x_dir == 1 || this.x_dir == 0){
-			if(this.airtime > 0.5){
-				this.image = char_right_jump;
-			} else {
-				this.image = char_right;
-			}
-		} else if (this.x_dir == -1){
-			if(this.airtime > 0.5){
-				this.image = char_left_jump;
-			} else {
-				this.image = char_left;
-			}
-		}
-
-			////////////////////////////////////////////////////////////////////////////////////////// DETERMINE IF TO TOGGLE SPRITE (FOR WALKING ANIM)
+			/////////////////////////////////////////////////////////////////////////// DETERMINE IF TO TOGGLE SPRITE (FOR WALKING ANIMATION)
 		if(this.distance_since_sprite_change >= 20){
 			this.walk_switch = !this.walk_switch;
 			this.distance_since_sprite_change = 0;
 		}
 
 
-
+		// change to facing right image if moving right, or not moving
 		if(this.x_dir == 1 || this.x_dir == 0){
 			if(this.walk_switch && this.airtime < 0.5){
 				this.image = char_right_second;
@@ -280,6 +272,7 @@ function Player(x_pos, y_pos) {
 				this.image = char_right_jump;
 			}
 		} else {
+			// change to facing left image if moving left
 			if(this.walk_switch && this.airtime < 0.5){
 				this.image = char_left_second;
 			} else if(this.airtime < 0.5) {
