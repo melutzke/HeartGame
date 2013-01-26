@@ -17,7 +17,7 @@ function draw_game() {
 
 		////////////////////////////////////////////////////////////////////////////////////////// DRAW EACH COLLECTABLE
 		for(var i = 0; i<collectable.length; i++){
-			// handle booze collectables
+			// handle collectables
 			if(!collectable[i].hidden){
 				ctx.drawImage(Cell.image, collectable[i].x+Math.floor(platform_x_movement), Math.floor(collectable[i].y));
 			}
@@ -68,12 +68,9 @@ function draw_world() {
 
 	var canvas = document.getElementById("draw_canvas");
 
-	if (PlayerGame.state == GAMESTATE_GAMEPLAY) {
+	if (PlayerGame.state == GAMESTATE_GAMEPLAY){
 		draw_game();
-				////////////////////////////////////////////////////////////////////////////////////////// SPLASH SCREEN IF-BLOCK
-
-	} else if(PlayerGame.state == GAMESTATE_OPTIONS){
-
+	}else if(PlayerGame.state == GAMESTATE_OPTIONS){
 		ctx.drawImage(optionsScreen, 0, 0);
 		Button_Options_Start.draw();
 
@@ -81,31 +78,22 @@ function draw_world() {
 			PlayerGame.resetGame();              //reset the game so that you don't start a game at your previous progress/death
 			PlayerGame.state = GAMESTATE_START;
 		}
-
-	} 
-
-	else if(PlayerGame.state == GAMESTATE_START){
+	}else if(PlayerGame.state == GAMESTATE_START){
 		ctx.drawImage(startScreen, 0, 0);
 		Button_Start_Options.draw();
 		Button_Start_Credits.draw();
 		Button_Start_Play.draw();
 
-
 		if(Button_Start_Play.clicked()){
-			PlayerGame.state = GAMESTATE_GAMEPLAY;
-					
+			PlayerGame.state = GAMESTATE_GAMEPLAY;			
 		}	
 		
-		
-		if(Button_Start_Credits.clicked())
-		{
+		if(Button_Start_Credits.clicked()){
 			PlayerGame.state = GAMESTATE_CREDITS;	
 		}
 		
-
 		if(Button_Start_Options.clicked()){
-			PlayerGame.state = GAMESTATE_OPTIONS;
-					
+			PlayerGame.state = GAMESTATE_OPTIONS;			
 		}	
 
 	}else if(PlayerGame.state == GAMESTATE_CREDITS){
