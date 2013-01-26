@@ -444,6 +444,12 @@ function Control() {
 	this.mouse_y = null;
 	this.p = false;
 }
+
+function gamepadConnected(evt)
+{
+  console.log(evt); 
+}
+window.addEventListener('MozGamepadConnected', gamepadConnected);
 		////////////////////////////////////////////////////////////////////////////////////////// PLATFORMS CLASS
 function Platform(x, y, type) {
 	this.x = x;
