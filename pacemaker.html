@@ -51,10 +51,7 @@ background.src = 			"./Images/test_background1.jpg";
 startScreen.src = 			"./Images/start_screen.fw.png";
 
 creditScreen1.src =         "./Images/test_background.jpg";
- 
-
 optionsScreen.src = 		"./Images/options_screen.fw.png";
-
 
 background2.src = 			"./Images/test_background2.png";
 
@@ -632,7 +629,7 @@ Button_Gameplay_Options = new Button(850, 10, 100, 30, "Options", ctx);
 
 
 
-Button_Options_Start = new Button(500, 500, 100, 30, "Main Menu", ctx);
+Button_Options_Start = new Button(550, 500, 100, 30, "Main Menu", ctx);
 
 
 
@@ -871,7 +868,7 @@ function draw_world() {
 
 	} else if(PlayerGame.state == GAMESTATE_OPTIONS){
 
-		ctx.drawImage(optionsScreen, 0, 0);
+		ctx.drawImage(optionsScreen, 200, 0);
 		Button_Options_Start.draw();
 
 		if(Button_Options_Start.clicked()){
