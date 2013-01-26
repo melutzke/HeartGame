@@ -35,10 +35,30 @@ var platforms = new Array();
 var platform_update = 0;
 var thisFrameFPS = 0;
 var windowActive = true;
-var startScreen = new Image();
-var creditScreen1 = new Image();
-var creditScreen2 = new Image();
+var startScreen   = new Image();
 var optionsScreen = new Image();
+
+
+var creditScreen1      = new Image();
+var creditScreen2      = new Image();
+var creditNameAlex     = new Image();
+var creditNameNick     = new Image();
+var creditNameMitchell = new Image();
+var creditNameJason    = new Image();
+var creditNameJesse    = new Image();
+
+creditScreen1.src =         "./Images/test_background.jpg";
+//creditScreen2.src      =    "./Images/"
+creditNameAlex.src     =    "./Images/AlexSohailey.png";
+creditNameNick.src     =    "./Images/NickHizzle.png";
+creditNameMitchell.src =    "./Images/MitchDeezy.png";
+creditNameJason.src    =    "./Images/JasonUltraKra.png";
+creditNameJesse.src    =    "./Images/JesseKrize.png";
+
+
+
+
+
 
 
 char_right_jump.src = 		"./Images/bucky_right_jump.gif";
@@ -50,7 +70,9 @@ char_left_second.src = 		"./Images/bucky_left_second.gif";
 background.src = 			"./Images/test_background1.jpg";
 startScreen.src = 			"./Images/start_screen.fw.png";
 
-creditScreen1.src =         "./Images/test_background.jpg";
+
+
+
 optionsScreen.src = 		"./Images/options_screen.fw.png";
 
 background2.src = 			"./Images/test_background2.png";
@@ -887,10 +909,15 @@ function draw_world() {
 		}	
 
 	}else if(PlayerGame.state == GAMESTATE_CREDITS){
-		
 		ctx.drawImage(creditScreen1, 0, 0);
-		//ctx.drawImage(creditScreen2, 0, 0);
-		
+		//ctx.drawImage(creditScreen2, 0, 0)
+		//left side
+	    ctx.drawImage(creditNameMitchell, 50, 100, 100, 30);
+		ctx.drawImage(creditNameAlex, 50, 350);
+		ctx.drawImage(creditNameNick, 50, 550);
+		//right side
+        ctx.drawImage(creditNameJason, 350, 100);
+        ctx.drawImage(creditNameJesse, 350, 350);
 		
 		Button_Credits_MainMenu.draw();
 
