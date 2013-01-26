@@ -21,6 +21,7 @@ var char_right_second = new Image();
 var x_check;
 var y_check;
 var collectable = new Array();
+var grav_const = 1;
 
 var debug = false;
 var grid = false;
@@ -151,6 +152,10 @@ function Player(x_pos, y_pos) {
 		this.y_dir = 0;
 		this.x_dir = 0;
 
+		if((Controller.up && grav_const == 1 ) || (Controller.down && grav_const == -1) && this.grounded){
+			grav_const *= -1;
+		}
+
 		// Perform death animation
 		if(this.dead && !this.deathAnimToggle){
 			this.deathAnimToggle = true
@@ -187,8 +192,14 @@ function Player(x_pos, y_pos) {
 
 			// if space is pressed, and we're grounded, and the jump toggle is fine, jump
 			if(Controller.space && (this.grounded || this.grounded_last_frame) && !this.jump_hold_toggle){
-				this.y_dir = -1;
-				this.y_speed = 18;
+				if(grav_const == 1){
+					this.y_dir = -1;
+					this.y_speed = 18;
+				} else {
+					this.y_dir = -1;
+					this.y_speed = -18;
+				}
+
 				this.jump_hold_toggle = true;	// set jump toggle to disable double jumping
 			}
 
@@ -208,7 +219,7 @@ function Player(x_pos, y_pos) {
 		}
 		
 		// calc new y speed based on gravity and possible jump
-		new_y_speed = -1 * Math.floor(this.y_speed) + Math.pow(this.airtime, 2);
+		new_y_speed = -1 * Math.floor(this.y_speed) + Math.pow(this.airtime, 2) * grav_const;
 
 		// set y_dir based on y speed, you can ignore this
 		if(new_y_speed > 0){
@@ -353,7 +364,13 @@ function Player(x_pos, y_pos) {
 						this.y += 20; // impale him a bit
 					}
 				} else {
-					this.airtime = 4.5;
+					if(grav_const == 1){
+						this.airtime = 4.5;
+					} else {
+						this.airtime = 0;
+						this.y_speed = 0;
+						this.grounded = true;
+					}
 				}
 			} else { // resolve x first if the first statement was false
 				this.x += depthX;
