@@ -10,8 +10,8 @@ var num_collisions = 0;
 var blocksWidth		= parseInt(prompt("Enter how many blocks wide", ""));
 var blocksHeight	= parseInt(prompt("Enter how many blocks tall", ""));
 
-var gameWidth = blocksWidth * 25;
-var gameHeight = blocksHeight * 25;
+var gameWidth = blocksWidth * 50;
+var gameHeight = blocksHeight * 50;
 
 var blockChoice = 0;
 
@@ -75,9 +75,9 @@ function Platform(x, y) {
 	this.x = x;
 	this.y = y;
 	this.image = new Image();
-	this.image.src = "grass_tile.gif";
-	this.width = 25;
-	this.height = 25;
+	this.image.src = "./Images/grass_tile.gif";
+	this.width = 50;
+	this.height = 50;
 }
 
 function Game(ctx, x_boundary, y_boundary, frame_delay){
@@ -141,23 +141,19 @@ function key_event(event) {
 		case 37: case 65:		Controller.left = true;		break;		// left
 		case 38: case 87:		Controller.up = true; 		break;		// up
 		case 40: case 83:		Controller.down = true;		break;		// down
+		case 49:  				Controller.one = true;		break;		// 1
 	}
 }
 
 function key_event_up(event) {
 	switch(event.keyCode){
-		// space       32
-		//           arrow wasd
-		// leftarrow   37 65
-		// rightarrow  39 68
-		// uparrow     38 87
-		// downarrow   40 83
 		case 32:				Controller.space = false;	break;		// space
 		case 16:				Controller.shift = false;	break;		// shift
 		case 39: case 68:		Controller.right = false;	break;		// right
 		case 37: case 65:		Controller.left = false;	break;		// left
 		case 38: case 87:		Controller.up = false; 		break;		// up
 		case 40: case 83:		Controller.down = false;	break;		// down
+		case 49:  				Controller.one = false;		break;		// 1
 	}
 }
 
@@ -230,7 +226,7 @@ function begin_game() {
 
 	Grass = new Platform();
 	Block = new Platform();
-	Block.image.src = "platform_placeholder.gif";
+	Block.image.src = "./Images/platform_placeholder.gif";
 	
 	// put code here to set up your game,d create your character objects, give them initial positions and speeds, etc.
 
@@ -244,17 +240,24 @@ function frame(){
 
 
 	if(Controller.mouse_left){
-		x_tile = Math.floor(x/25);
-		y_tile = Math.floor(y/25);
+		x_tile = Math.floor(x/50);
+		y_tile = Math.floor(y/50);
 		if(y_tile < blocksHeight && x_tile < blocksWidth)
 		map[y_tile][x_tile] = blockChoice;
 	}
 	if(Controller.mouse_right){
-		x_tile = Math.floor(x/25);
-		y_tile = Math.floor(y/25);
+		x_tile = Math.floor(x/50);
+		y_tile = Math.floor(y/50);
 		if(y_tile < blocksHeight && x_tile < blocksWidth && y_tile > 0 && x_tile > 0)
 		map[y_tile][x_tile] = 0;
 	}
+
+    if(Controller.one){
+	updateBlockChoice(2);
+    }
+    if(Controller.left){
+    	updateBlockChoice(3);
+    }
 
 
 	if(Controller.shift){
@@ -276,7 +279,7 @@ function frame(){
 	}
 	var start = new Date().getTime();
 
-	BuckyGame.clearColor = "rgb(255,255,255)";
+	BuckyGame.clearColor = "rgb(505,505,505)";
 	screenClear(BuckyGame);
 
 	var end = new Date().getTime();
@@ -303,55 +306,55 @@ function draw_world() {
 		Grass = new Platform();
 		Block = new Platform();
 		Spike = new Platform();
-		Beer  = new Platform();
+		Blood  = new Platform();
 		Enemy = new Platform();
 
 		Grass.image = new Image();
 		Block.image = new Image();
 		Spike.image = new Image();
-		Beer.image  = new Image();
+		Blood.image  = new Image();
 		Enemy.image = new Image();
 
-		Grass.image.src = "grass_tile.png";
-		Block.image.src = "platform.png";
-		Spike.image.src = "spike_pit.png";
-		Beer.image.src 	= "beer_mug.png";
-		Enemy.image.src = "generic_enemy_placeholder.gif";
+		Grass.image.src = "./Images/grass_tile.png";
+		Block.image.src = "./Images/platform.png";
+		Spike.image.src = "./Images/spike_pit.png";
+		Blood.image.src 	= "./Images/redbloodcell.png";
+		Enemy.image.src = "./Images/generic_enemy_placeholder.gif";
 
 		// draw out the map
 		
 		for(var i = 0; i<map.length; i++){
 			for(var k = 0; k<map[i].length; k++){
 				if(map[i][k]==1){
-					ctx.drawImage(Grass.image, k*25, i*25);
+					ctx.drawImage(Grass.image, k*50, i*50);
 				}
 				if(map[i][k]==2){
-					ctx.drawImage(Block.image, k*25, i*25);
+					ctx.drawImage(Block.image, k*50, i*50);
 				}
 				if(map[i][k]==3){
-					ctx.drawImage(Beer.image, k*25, i*25);
+					ctx.drawImage(Blood.image, k*50, i*50);
 				}
 				if(map[i][k]==4){
-					ctx.drawImage(Spike.image, k*25, i*25);
+					ctx.drawImage(Spike.image, k*50, i*50);
 				}
 				if(map[i][k]==5){
-					ctx.drawImage(Enemy.image, k*25, i*25);
+					ctx.drawImage(Enemy.image, k*50, i*50);
 				}
 			}
 		}
 		
 		ctx.stokeStyle = "rgb(0,0,0)";
-		for(var i = 0; i*25<=blocksWidth*25; i++){
+		for(var i = 0; i*50<=blocksWidth*50; i++){
 			ctx.stokeStyle = "rgb(0,0,0)";
 			ctx.beginPath();
-  			ctx.moveTo(0,i*25);
-  			ctx.lineTo(blocksWidth*25,i*25);
+  			ctx.moveTo(0,i*50);
+  			ctx.lineTo(blocksWidth*50,i*50);
   			ctx.stroke();
 
   			ctx.stokeStyle = "rgb(0,0,0)";
   			ctx.beginPath();
-  			ctx.moveTo(i*25,0);
-  			ctx.lineTo(i*25,blocksHeight*25);
+  			ctx.moveTo(i*50,0);
+  			ctx.lineTo(i*50,blocksHeight*50);
   			ctx.stroke();
 
   			ctx.stokeStyle = "rgb(0,0,0)";
@@ -392,11 +395,11 @@ window.addEventListener('mousedown', mouse_down, false);
 <canvas onmousemove="mouse_move(event)" onmousedown="mouse_press(event)" id="draw_canvas"  oncontextmenu="return false;" width="100%"></canvas>
 
 <div style="position: fixed; bottom: 100px; left: 50px; width: 400px; background-color: #FFFFFF; height: 100px; border: 1px solid black;">
-	<img src="grass_tile.png" width="50" 				onclick="updateBlockChoice(1);" />
-	<img src="platform.png" width="50"  				onclick="updateBlockChoice(2);" />
-	<img src="beer_mug.png" width="50"					onclick="updateBlockChoice(3);" />
-	<img src="spike_pit.png" width="50"  				onclick="updateBlockChoice(4);" />
-	<img src="generic_enemy_placeholder.gif" width="50" onclick="updateBlockChoice(5);" />
+	<img src="./Images/grass_tile.png" width="50" 				onclick="updateBlockChoice(1);" />
+	<img src="./Images/platform.png" width="50"  				onclick="updateBlockChoice(2);" />
+	<img src="./Images/redbloodcell.png" width="50"				onclick="updateBlockChoice(3);" />
+	<img src="./Images/spike_pit.png" width="50"  				onclick="updateBlockChoice(4);" />
+	<img src="./Images/generic_enemy_placeholder.gif" width="50" onclick="updateBlockChoice(5);" />
 </div>
 
 
@@ -404,7 +407,7 @@ window.addEventListener('mousedown', mouse_down, false);
 	gameCanvas = document.getElementById("draw_canvas");
 	gameCanvas.width = gameWidth;
 	gameCanvas.height = gameHeight;
-
+mousedown
 </script>
 
 </body>
