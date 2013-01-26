@@ -768,7 +768,8 @@ function frame(){
 	
 	screenClear(PlayerGame);
 
-	gametimeout = setTimeout(frame, 5);
+	window.requestAnimationFrame(frame);
+	//gametimeout = setTimeout(frame, 5);
 	draw_world();
 
 
