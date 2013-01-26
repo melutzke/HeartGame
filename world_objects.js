@@ -136,7 +136,7 @@ function Player(x_pos, y_pos) {
 
 		// set new y position, make sure that
 		if ( Math.abs(new_y_speed * fpsControl) > blocksize / 2 - 1){
-			this.y += this.y_dir * 24;
+			this.y += this.y_dir * blocksize / 2 - 1;
 		}
 		else{
 			this.y += new_y_speed * fpsControl;
