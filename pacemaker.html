@@ -609,18 +609,16 @@ CurrPlayer.image.src  = "./Images/bucky_small.gif";
 scorebar = new Image();
 scorebar.src = "./Images/scorebar.jpg";
 
-
+//Syntax for buttons --> What Gamestate it is at _ What Gamestate it is going to
 //GAMESTATE_START
-OptionsButton = new Button(500, 350, 100, 30, "Options", ctx);
-CreditsButton = new Button(500, 450, 100, 30, "Credz", ctx);
-PlayButton = new Button(500, 250, 100, 30, "Play Game", ctx);
+Button_Start_Options = new Button(500, 350, 100, 30, "Options", ctx);
+Button_Start_Credits = new Button(500, 450, 100, 30, "Credz", ctx);
+Button_Start_Play = new Button(500, 250, 100, 30, "Play Game", ctx);
 //GAMESTATE_GAMEPLAY
+Button_Gameplay_Reset = new Button(650, 10, 120, 30, "Reset Game", ctx);
+Button_Gameplay_Options = new Button(750, 10, 100, 30, "Options", ctx);
 //GAMESTATE_OPTIONS
 //GAMESTATE_CREDITS
-OptionsButton = new Button(500, 350, 100, 30, "Options", ctx);
-CreditsButton = new Button(500, 450, 100, 30, "Credz", ctx);
-PlayButton = new Button(500, 250, 100, 30, "Play Game", ctx);
-ResetButton = new Button(650, 10, 120, 30, "Reset Game", ctx);
 
 
 
@@ -779,8 +777,7 @@ function draw_world() {
 
 
 
-		if(Controller.click_mouse_y <= ResetButton.y+ResetButton.height && Controller.click_mouse_y >= ResetButton.y
-			&& Controller.click_mouse_x <= ResetButton.x+ResetButton.width && Controller.click_mouse_x >=ResetButton.x){
+		if(Button_Gameplay_Reset.clicked()){
 			PlayerGame.resetGame();
 		}
 
@@ -816,7 +813,7 @@ function draw_world() {
 		drawUI(ctx);
 
 			////////////////////////////////////////////////////////////////////////////////////////// DRAW RESET BUTTON
-		ResetButton.draw();
+		Button_Gameplay_Reset.draw();
 
 			////////////////////////////////////////////////////////////////////////////////////////// DRAW SEXY GRID
 		if(grid){
@@ -844,20 +841,19 @@ function draw_world() {
 	} /*else if(PlayerGame.state == GAMESTATE_CREDITS){
 
 		ctx.drawImage(startScreen, -50, -50);
-		PlayButton.draw();
-		if(Controller.click_mouse_y <= PlayButton.y+PlayButton.height && Controller.click_mouse_y >= PlayButton.y
-			&& Controller.click_mouse_x <= PlayButton.x+PlayButton.width && Controller.click_mouse_x >=PlayButton.x){
+		Button_Start_Play.draw();
 
-			PlayerGame.state = GAMEPLAY;
-
+		if(Button_Start_Play.clicked()){
+			PlayerGame.state = GAMESTATE_GAMEPLAY;
 		}
+
 	} */else if(PlayerGame.state == GAMESTATE_START){
 		ctx.drawImage(startScreen, 0, 0);
-		OptionsButton.draw();
-		CreditsButton.draw();
-		PlayButton.draw();
+		Button_Start_Options.draw();
+		Button_Start_Credits.draw();
+		Button_Start_Play.draw();
 
-		if(PlayButton.clicked()){
+		if(Button_Start_Play.clicked()){
 			PlayerGame.state = GAMESTATE_GAMEPLAY;
 		}
 	}
