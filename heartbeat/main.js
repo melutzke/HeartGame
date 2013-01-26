@@ -67,14 +67,14 @@ function draw(ctx){
 	ctx.drawImage(spotlightimg,model.worldOffset,0);
 
 	if(model.heartman.health<=0){
-	ctx.drawImage(heartman_deadimg,200 + model.worldOffset ,60)
+	ctx.drawImage(heartman_deadimg,270 + model.worldOffset ,40)
 	}
 	else{
 	if(!model.heartman.hurt){
-	ctx.drawImage(heartmanimg,200 + model.worldOffset ,60)
+	ctx.drawImage(heartmanimg,270 + model.worldOffset ,40)
 	}
 	else{
-	ctx.drawImage(heartman_hurtimg, 200 + model.worldOffset, 60)
+	ctx.drawImage(heartman_hurtimg, 270 + model.worldOffset, 40)
 	}
 	}
 
