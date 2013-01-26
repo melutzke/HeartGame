@@ -65,11 +65,11 @@ creditNameMitchell.src =    "./Images/MitchDeezy.png";
 creditNameJason.src    =    "./Images/JasonUltraKra.png";
 creditNameJesse.src    =    "./Images/JesseKrize.png";
 
-char_right_jump.src = 		"./Images/bucky_right_jump.gif";
+char_right_jump.src = 		"./Images/cellman_jumping.png";
 char_left_jump.src = 		"./Images/bucky_left_jump.gif";
-char_right.src = 			"./Images/bucky_right.gif";
+char_right.src = 			"./Images/cellman_running.png";
 char_left.src = 			"./Images/bucky_left.gif";
-char_right_second.src = 	"./Images/bucky_right_second.gif";
+char_right_second.src = 	"./Images/cellman_running2.png";
 char_left_second.src = 		"./Images/bucky_left_second.gif";
 background.src = 			"./Images/test_background1.jpg";
 startScreen.src = 			"./Images/start_screen.fw.png";
