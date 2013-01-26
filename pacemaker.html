@@ -152,7 +152,7 @@ function Player(x_pos, y_pos) {
 			}
 			if(Controller.space && (this.grounded || this.grounded_last_frame) && !this.jump_hold_toggle){
 				this.y_dir = -1;
-				this.y_speed = 9;
+				this.y_speed = 18;
 				this.jump_hold_toggle = true;
 			}
 			if(Controller.shift){
@@ -223,7 +223,7 @@ function Player(x_pos, y_pos) {
 		}
 
 		if(!this.collision){
-			this.airtime += 0.12*fpsControl;
+			this.airtime += 0.24*fpsControl;
 		} 
 
 		// after position has been updated, detect platform collision issues and resolve them
@@ -331,7 +331,7 @@ function Player(x_pos, y_pos) {
 						this.y += 20; // impale him a bit
 					}
 				} else {
-					this.airtime = 3;
+					this.airtime = 4.5;
 				}
 			} else { // resolve x first if the first statement was false
 				this.x += depthX;
