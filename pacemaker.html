@@ -7,7 +7,6 @@ var GAMESTATE_START = 0;
 var GAMESTATE_GAMEPLAY = 1;
 var GAMESTATE_OPTIONS = 2;
 var GAMESTATE_CREDITS = 3;
-var GAMESTATE_PAUSE = 4;
 
 var background = new Image();
 var background2 = new Image();
@@ -146,7 +145,7 @@ function Player(x_pos, y_pos) {
 			this.dead = true;
 		}
 
-		if(!this.dead){
+		if(!this.dead && !Controller.p){
 
 			if(!Controller.space){
 				this.jump_hold_toggle = false;
@@ -740,7 +739,7 @@ function drawUI(context){
 		context.font = '30px Calibri';
 		context.fillText("You dead bro?",																230,	35);
 	}
-	if(document.activeElement.id != "draw_canvas" || !windowActive){
+	if(document.activeElement.id != "draw_canvas" || !windowActive || Controller.p){ ////////////////////////////Known Bug - can pause while jumped
 				context.fillStyle = "rgba(50,50,50,0.5)";
 				context.fillRect(527, 247, 145, 50);
 				context.fillStyle = "rgb(240,240,240)";
@@ -752,10 +751,6 @@ function drawUI(context){
 
 	///////////////////////////////////////////////////////////////////// ACTIONS TO DO BEFORE DRAWING (good place to update shit)
 function frame(){
-
-	if(Controller.down) CurrPlayer.dead = false;
-
-		
 
 	if(document.activeElement.id == "draw_canvas" && windowActive){
 		///////////////////////////////////////////////////////////////////////////////////// UPDATE DAT CHAR
@@ -872,14 +867,7 @@ function draw_world() {
 			PlayerGame.state = GAMESTATE_START;
 		}
 
-	} else if(PlayerGame.state == GAMESTATE_PAUSE){
-
-
-
-	}
-
-
-
+	} 
 
 	else if(PlayerGame.state == GAMESTATE_START){
 		ctx.drawImage(startScreen, 0, 0);
