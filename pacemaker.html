@@ -137,7 +137,10 @@ function frame(){
 
 	if(document.activeElement.id == "draw_canvas" && windowActive){
 		///////////////////////////////////////////////////////////////////////////////////// UPDATE DAT CHAR
-		CurrPlayer.update();
+		
+		if (PlayerGame.state == GAMESTATE_GAMEPLAY) {
+			CurrPlayer.update();
+		}
 	}
 	
 	screenClear(PlayerGame);

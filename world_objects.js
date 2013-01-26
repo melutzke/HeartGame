@@ -115,6 +115,12 @@ function Player(x_pos, y_pos) {
 				this.x_dir = 0;
 				this.x_speed = 0;
 			}
+
+			// This overrides the code for controlling x speed with keys, as the new game autoscales
+			// WE CAN REMOVE THE CODE ABOE INCREMENTALLY AS WE WANT TO CLEAN STUFF UP
+			
+			this.x_speed = 10;
+			this.x_dir = 1;
 		
 		}
 		
@@ -128,8 +134,13 @@ function Player(x_pos, y_pos) {
 			this.y_dir = -1;
 		}
 
-		// set new y position
-		this.y += new_y_speed * fpsControl;
+		// set new y position, make sure that
+		if ( Math.abs(new_y_speed * fpsControl) > blocksize / 2 - 1){
+			this.y += this.y_dir * 24;
+		}
+		else{
+			this.y += new_y_speed * fpsControl;
+		}
 
 
 		// if we've moved too far from the left edge, scroll screen instead of character
