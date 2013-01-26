@@ -23,7 +23,7 @@ var y_check;
 var collectable = new Array();
 var grav_const = 1;
 
-var debug = false;
+var debug = true;
 var grid = false;
 
 var fpsWave = 60;
@@ -152,7 +152,7 @@ function Player(x_pos, y_pos) {
 		this.y_dir = 0;
 		this.x_dir = 0;
 
-		if((Controller.up && grav_const == 1 ) || (Controller.down && grav_const == -1) && this.grounded){
+		if(( (Controller.up && grav_const == 1 ) && this.grounded ) || ((Controller.down && grav_const == -1) && this.grounded)){
 			grav_const *= -1;
 		}
 
@@ -269,7 +269,7 @@ function Player(x_pos, y_pos) {
 		}
 
 		// if you haven't collided increase counter that tracks "air time" by arbitrary .24 amount
-		if(!this.collision){
+		if(!this.grounded){
 			this.airtime += 0.24*fpsControl;
 		} 
 
@@ -388,7 +388,7 @@ function update_platforms(x_change){
 }
 
 		/////////////////////////////////////////////////////////////////////////////////GODDAMN AWESOME AS SHIT BUTTONS (not really)
-function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx, isTrans) {
+function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx, b_isTrans) {
 	this.x = x_pos;
 	this.y = y_pos;
 	this.width = b_width;
@@ -399,9 +399,10 @@ function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx, isTrans) {
 	this.fill = "#E7D9C1";
 	this.stroke = "#000000";
 	this.clicked = clicked;
+	this.isTrans = b_isTrans;
 
 	function draw(){
-		if (!isTrans) { // Used to make actual buttons invisible because text is an image
+		if (!this.isTrans) { // Used to make actual buttons invisible because text is an image
 		this.ctx.fillStyle = this.fill;
 		this.ctx.strokeStyle = this.stroke;
 		this.ctx.lineWidth   = 1;
