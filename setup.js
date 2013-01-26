@@ -4,6 +4,17 @@ var GAMESTATE_OPTIONS = 2;
 var GAMESTATE_CREDITS = 3;
 
 var canvas; 
+
+var padLast = new Array();
+	padLast['A'] = false;
+	padLast['B'] = false;
+	padLast['X'] = false;
+	padLast['DPAD_LEFT'] = false;
+	padLast['DPAD_RIGHT'] = false;
+	padLast['DPAD_UP'] = false;
+	padLast['DPAD_DOWN'] = false;
+
+
 var background = new Image();
 var background2 = new Image();
 var blocksize = 50;
@@ -108,10 +119,6 @@ function begin_game() {
 
 
 
-
-
-
-
 gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
     // a new gamepad connected
 });
@@ -124,58 +131,44 @@ gamepad.bind(Gamepad.Event.UNSUPPORTED, function(device) {
     // an unsupported gamepad connected (add new mapping)
 });
 
-/*
+
 gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
     // gamepads were updated (around 60 times a second)
 
 	for (control in gamepads[0].state) {
 		//value = gamepads[i].state[control];
 		
-		if(gamepads[0].state['A'] && !Controller.space){
-			Controller.space = true;
-		} else if(gamepadSupport){
-			Controller.space = false;
+		if(gamepads[0].state['A'] != padLast['A']){
+			gamepads[0].state['A'] = !gamepads[0].state['A'];
+			Controller.space = !Controller.space;
+		}
+		if(gamepads[0].state['X'] != padLast['X']){
+			gamepads[0].state['X'] = !gamepads[0].state['X'];
+			Controller.shift = !Controller.shift;
+		}
+		if(gamepads[0].state['DPAD_LEFT'] != padLast['DPAD_LEFT']){
+			gamepads[0].state['DPAD_LEFT'] = !gamepads[0].state['DPAD_LEFT'];
+			Controller.left = !Controller.left;
+		}
+		if(gamepads[0].state['DPAD_RIGHT'] != padLast['DPAD_RIGHT']){
+			gamepads[0].state['DPAD_RIGHT'] = !gamepads[0].state['DPAD_RIGHT'];
+			Controller.right = !Controller.right;
+		}
+		if(gamepads[0].state['DPAD_UP'] != padLast['DPAD_UP']){
+			gamepads[0].state['DPAD_UP'] = !gamepads[0].state['DPAD_UP'];
+			Controller.up = !Controller.up;
+		}
+		if(gamepads[0].state['DPAD_DOWN'] != padLast['DPAD_DOWN']){
+			gamepads[0].state['DPAD_DOWN'] = !gamepads[0].state['DPAD_DOWN'];
+			Controller.down = !Controller.down;
 		}
 
-		if(gamepads[0].state['X'] && !Controller.shift){
-			Controller.shift = true;
-		} else if(gamepadSupport) {
-			Controller.shift = false;
-		}
-
-		if(gamepads[0].state['DPAD_LEFT'] && !Controller.left){
-			Controller.left = true;
-		} else if(gamepadSupport) {
-			Controller.left = false;
-		}
-
-		if(gamepads[0].state['DPAD_RIGHT'] && !Controller.right){
-			Controller.right = true;
-		} else if(gamepadSupport) {
-			Controller.right = false;
-		}
-
-		if(gamepads[0].state['DPAD_UP'] && !Controller.up){
-			Controller.up = true;
-		} else if(gamepadSupport) {
-			Controller.up = false;
-		}
-
-		if(gamepads[0].state['DPAD_DOWN'] && !Controller.down){
-			Controller.down = true;
-		} else if(gamepadSupport) {
-			Controller.down = false;
-		}
 	}
 
 
 
 });
 
-
-
-
-*/
 
 
 
