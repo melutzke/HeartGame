@@ -425,7 +425,7 @@ function Item(x, y) {
 	this.x = x;
 	this.y = y;
 	this.image = new Image();
-	this.image.src = "./Images/beer_mug.gif";
+	this.image.src = "./Images/redbloodcell.gif";
 	this.width = blocksize;
 	this.height = blocksize;
 	this.hidden = false;
@@ -594,11 +594,11 @@ Dirt.imageArray[1].src = "./Images/ground_tile2.png";
 Block = new Platform();
 Block2 = new Platform();
 Block3 = new Platform();
-Beer = new Item();
+Cell = new Item();
 
 Spike = new Platform();
 SpikeColumn = new Platform();
-Beer.image.src = "./Images/redbloodcell.png";
+Cell.image.src = "./Images/redbloodcell.png";
 
 //Block.image.src = "platform_placeholder.gif";
 Block.image.src 	  = "./Images/platform.png";
@@ -729,7 +729,7 @@ function drawUI(context){
 		context.fillText("Dist-Since-Change: " 	+ CurrPlayer.distance_since_sprite_change.toFixed(2), 		600, 	20);
 	} else {
 		// draw normal UI
-		context.drawImage(Beer.image, 15, 12);
+		context.drawImage(Cell.image, 15, 12);
 		context.font = '25px Calibri';
 		context.fillStyle = "rgb(240,240,240)";
 		context.fillText(" x ", 57, 42);
@@ -818,7 +818,7 @@ function draw_world() {
 			for(var i = 0; i<collectable.length; i++){
 				// handle booze collectables
 				if(!collectable[i].hidden){
-					ctx.drawImage(Beer.image, collectable[i].x+Math.floor(platform_x_movement), Math.floor(collectable[i].y));
+					ctx.drawImage(Cell.image, collectable[i].x+Math.floor(platform_x_movement), Math.floor(collectable[i].y));
 				}
 			}
 		
