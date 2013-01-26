@@ -44,14 +44,14 @@ var splashImage = new Image();
 var timers = new Array();
 
 
-bucky_right_jump.src = 		"bucky_right_jump.gif";
-bucky_left_jump.src = 		"bucky_left_jump.gif";
-bucky_right.src = 			"bucky_right.gif";
-bucky_left.src = 			"bucky_left.gif";
-bucky_right_second.src = 	"bucky_right_second.gif";
-bucky_left_second.src = 	"bucky_left_second.gif";
-background.src = 			"test_background.jpg";
-splashImage.src = 			"splash_screen.png";
+bucky_right_jump.src = 		"./Images/bucky_right_jump.gif";
+bucky_left_jump.src = 		"./Images/bucky_left_jump.gif";
+bucky_right.src = 			"./Images/bucky_right.gif";
+bucky_left.src = 			"./Images/bucky_left.gif";
+bucky_right_second.src = 	"./Images/bucky_right_second.gif";
+bucky_left_second.src = 	"./Images/bucky_left_second.gif";
+background.src = 			"./Images/test_background.jpg";
+splashImage.src = 			"./Images/splash_screen.png";
 
 	// nice little piece of code that uses a browser's native
 	// request animation frame function if it exists. If it doesn't,
@@ -417,7 +417,7 @@ function Platform(x, y, type) {
 	this.y = y;
 	this.type = type;
 	this.image = new Image();
-	this.image.src = "grass_tile.png";
+	this.image.src = "./Images/grass_tile.png";
 	this.width = blocksize;
 	this.height = blocksize;
 }
@@ -426,7 +426,7 @@ function Item(x, y) {
 	this.x = x;
 	this.y = y;
 	this.image = new Image();
-	this.image.src = "beer_mug.gif";
+	this.image.src = "./Images/beer_mug.gif";
 	this.width = blocksize;
 	this.height = blocksize;
 	this.hidden = false;
@@ -586,16 +586,16 @@ Buckingham = new Bucky(50, 300);				// (x-position, y-position)
 Grass = new Platform();
 Grass.imageArray = new Array();
 Grass.imageArray[0] = new Image();
-Grass.imageArray[0].src = "grass_tile.png";
+Grass.imageArray[0].src = "./Images/grass_tile.png";
 Grass.imageArray[1] = new Image();
-Grass.imageArray[1].src = "grass_tile2.png";
+Grass.imageArray[1].src = "./Images/grass_tile2.png";
 
 Dirt = new Platform();
 Dirt.imageArray = new Array();
 Dirt.imageArray[0] = new Image();
-Dirt.imageArray[0].src = "ground_tile.png";
+Dirt.imageArray[0].src = "./Images/ground_tile.png";
 Dirt.imageArray[1] = new Image();
-Dirt.imageArray[1].src = "ground_tile2.png";
+Dirt.imageArray[1].src = "./Images/ground_tile2.png";
 
 Block = new Platform();
 Block2 = new Platform();
@@ -604,18 +604,18 @@ Beer = new Item();
 
 Spike = new Platform();
 SpikeColumn = new Platform();
-Beer.image.src = "beer_mug.png";
+Beer.image.src = "./Images/beer_mug.png";
 
 //Block.image.src = "platform_placeholder.gif";
-Block.image.src 	  = "platform.png";
-Block2.image.src 	  = "platform_only.png";
-Block3.image.src 	  = "platform_underneath.png";
-Spike.image.src 	  = "spike_pit.png";	
-SpikeColumn.image.src = "spike_lower.png";
+Block.image.src 	  = "./Images/platform.png";
+Block2.image.src 	  = "./Images/platform_only.png";
+Block3.image.src 	  = "./Images/platform_underneath.png";
+Spike.image.src 	  = "./Images/spike_pit.png";	
+SpikeColumn.image.src = "./Images/spike_lower.png";
 
-Buckingham.image.src  = "bucky_small.gif";
+Buckingham.image.src  = "./Images/bucky_small.gif";
 scorebar = new Image();
-scorebar.src = "scorebar.jpg";
+scorebar.src = "./Images/scorebar.jpg";
 
 PlayButton = new Button(500, 450, 100, 30, "Play Game", ctx);
 ResetButton = new Button(650, 10, 120, 30, "Reset Game", ctx);
