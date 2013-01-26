@@ -9,6 +9,8 @@ var enemyheartlogoimg;
 var enemyhealthmeterimg;
 
 var heartmanimg; 
+var heartman_hurtimg;
+var heartman_deadimg;
 
 
 function HeartMan(){
@@ -64,12 +66,18 @@ function draw(ctx){
 	
 	ctx.drawImage(spotlightimg,model.worldOffset,0);
 
+	if(model.heartman.health<=0){
+	ctx.drawImage(heartman_deadimg,200 + model.worldOffset ,60)
+	}
+	else{
 	if(!model.heartman.hurt){
 	ctx.drawImage(heartmanimg,200 + model.worldOffset ,60)
 	}
 	else{
 	ctx.drawImage(heartman_hurtimg, 200 + model.worldOffset, 60)
 	}
+	}
+
 
 
 	var l = model.gloves.left;
@@ -149,6 +157,9 @@ function init(){
 
 	heartman_hurtimg = new Image();
 	heartman_hurtimg.src = "heartman_hurt.png";
+
+	heartman_deadimg = new Image();
+	heartman_deadimg.src = "heartman_dead.png";
 
 
 
