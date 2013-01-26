@@ -13,17 +13,17 @@ var GAMESTATE_CREDITS = 3;
 var background = new Image();
 var beerTotal = 0;
 var blocksize = 25;
-var booze_count = 0;
-var bucky_left = new Image();
-var bucky_left_jump = new Image();
-var bucky_left_second = new Image();
-var bucky_right = new Image();
-var bucky_right_jump = new Image();
-var bucky_right_second = new Image();
+var collectable_count = 0;
+var char_left = new Image();
+var char_left_jump = new Image();
+var char_left_second = new Image();
+var char_right = new Image();
+var char_right_jump = new Image();
+var char_right_second = new Image();
 var x_check;
 var y_check;
 var collectable = new Array();
-var debug = true;
+var debug = false;
 var drunk_max = 0;
 var drunkness = 0;
 var drunkness_increase = 0.1;
@@ -48,12 +48,12 @@ var splashImage = new Image();
 var timers = new Array();
 
 
-bucky_right_jump.src = 		"./Images/bucky_right_jump.gif";
-bucky_left_jump.src = 		"./Images/bucky_left_jump.gif";
-bucky_right.src = 			"./Images/bucky_right.gif";
-bucky_left.src = 			"./Images/bucky_left.gif";
-bucky_right_second.src = 	"./Images/bucky_right_second.gif";
-bucky_left_second.src = 	"./Images/bucky_left_second.gif";
+char_right_jump.src = 		"./Images/bucky_right_jump.gif";
+char_left_jump.src = 		"./Images/bucky_left_jump.gif";
+char_right.src = 			"./Images/bucky_right.gif";
+char_left.src = 			"./Images/bucky_left.gif";
+char_right_second.src = 	"./Images/bucky_right_second.gif";
+char_left_second.src = 		"./Images/bucky_left_second.gif";
 background.src = 			"./Images/test_background.jpg";
 splashImage.src = 			"./Images/splash_screen.png";
 
@@ -97,7 +97,7 @@ var fps = 60, now, lastUpdate = (new Date)*1 - 1, fpsControl = 1, x, y;
 // Setting this to 1 will show you the FPS of the last sampled frame only
 var fpsFilter = 10;
 
-function Bucky(x_pos, y_pos) {
+function Player(x_pos, y_pos) {
 
 	this.x = x_pos;
 	this.last_x = 0;
@@ -113,7 +113,6 @@ function Bucky(x_pos, y_pos) {
 	this.image = new Image();
 	this.width = 20;		// collision width of bucky (so he overlaps things a bit)
 	this.height = 40;		// collision height of bucky (so he overlaps things a bit)
-	this.drunk = false;
 	this.grounded = false;
 	this.grounded_last_frame = false;
 	this.jump_hold_toggle = false;
@@ -124,18 +123,12 @@ function Bucky(x_pos, y_pos) {
 	this.detect_collision_platform = detect_collision_platform;
 
 
-	////////////////////////////////////////////////////////////////////////////////////////// Bucky's update function
+	////////////////////////////////////////////////////////////////////////////////////////// Player's update function
 	function update(){
 
 		this.last_x = this.x;
 		this.y_dir = 0;
 		this.x_dir = 0;
-
-		for(i = 0; i < enemies.length; i++){
-			if(enemyCollision(this, enemies[i]) < 20){
-				this.dead = true;
-			}
-		}
 
 		if(this.dead && !this.deathAnimToggle){
 			this.deathAnimToggle = true
@@ -183,6 +176,7 @@ function Bucky(x_pos, y_pos) {
 		}
 		
 		new_y_speed = -1 * Math.floor(this.y_speed) + Math.pow(this.airtime, 2);
+
 		if(new_y_speed > 0){
 			this.y_dir = 1;
 		} else {
@@ -231,8 +225,6 @@ function Bucky(x_pos, y_pos) {
 				this.distance_since_sprite_change += this.x_speed*fpsControl;
 			}
 		}
-			
-		
 
 		if(this.y>gameHeight-this.height + 500){
 			this.y=gameHeight-this.height + 500;
@@ -252,27 +244,23 @@ function Bucky(x_pos, y_pos) {
 		for(var i = 0; i<collectable.length; i++){
 			if(distanceBetween(this, collectable[i]) < 30){
 				collectable[i].hidden = true;
-				booze_count++;
+				collectable_count++;
 				collectable.splice(i, 1);
 			}
 		}
 
 
-		if(booze_count > 10){
-			this.drunk = true;
-		}
-
 		if(this.x_dir == 1 || this.x_dir == 0){
 			if(this.airtime > 0.5){
-				this.image = bucky_right_jump;
+				this.image = char_right_jump;
 			} else {
-				this.image = bucky_right;
+				this.image = char_right;
 			}
 		} else if (this.x_dir == -1){
 			if(this.airtime > 0.5){
-				this.image = bucky_left_jump;
+				this.image = char_left_jump;
 			} else {
-				this.image = bucky_left;
+				this.image = char_left;
 			}
 		}
 
@@ -286,19 +274,19 @@ function Bucky(x_pos, y_pos) {
 
 		if(this.x_dir == 1 || this.x_dir == 0){
 			if(this.walk_switch && this.airtime < 0.5){
-				this.image = bucky_right_second;
+				this.image = char_right_second;
 			} else if (this.airtime < 0.5){
-				this.image = bucky_right;
+				this.image = char_right;
 			} else {
-				this.image = bucky_right_jump;
+				this.image = char_right_jump;
 			}
 		} else {
 			if(this.walk_switch && this.airtime < 0.5){
-				this.image = bucky_left_second;
+				this.image = char_left_second;
 			} else if(this.airtime < 0.5) {
-				this.image = bucky_left;
+				this.image = char_left;
 			} else {
-				this.image = bucky_left_jump;
+				this.image = char_left_jump;
 			}
 		}
 	}
@@ -309,8 +297,8 @@ function Bucky(x_pos, y_pos) {
 		this.grounded_last_frame = this.grounded;
 		this.grounded = false;
 
-		var centerBuckyX = 0;
-		var centerBuckyY = 0;
+		var centerPlayerX = 0;
+		var centerPlayerY = 0;
 		var centerRectX = 0;
 		var centerRectY = 0;
 		var distanceX = 0;
@@ -322,13 +310,13 @@ function Bucky(x_pos, y_pos) {
 
 		for(var i = 0; i<platforms.length; i++){
 
-			centerBuckyX = this.x + this.width/2 + 6;
-			centerBuckyY = this.y + this.height/2;
+			centerPlayerX = this.x + this.width/2 + 6;
+			centerPlayerY = this.y + this.height/2;
 			centerRectX = platforms[i].x + platforms[i].width/2;
 			centerRectY = platforms[i].y + platforms[i].height/2;
 
-			distanceX = centerBuckyX - centerRectX;
-			distanceY = centerBuckyY - centerRectY;
+			distanceX = centerPlayerX - centerRectX;
+			distanceY = centerPlayerY - centerRectY;
 			minDistanceX = this.width/2 + platforms[i].width/2;
 			minDistanceY = this.height/2 + platforms[i].height/2;
 
@@ -463,7 +451,7 @@ function Game(ctx, x_boundary, y_boundary, frame_delay){
 			////////////////////////////////////////////////////////////////////////////////////// RESET GAME
 	function resetGame(){
 		beerTotal = 0;
-		booze_count = 0;
+		collectable_count = 0;
 		collectable = new Array();
 		drunk_max = 0;
 		drunkness = 0;
@@ -584,8 +572,8 @@ var canvas = document.getElementById("draw_canvas");
 ctx = canvas.getContext("2d");
 
 Controller = new Control();
-BuckyGame = new Game(ctx, gameWidth, gameHeight, 10);		// (context, x_boundary, y_boundary, ms_delay)
-Buckingham = new Bucky(50, 300);				// (x-position, y-position)
+PlayerGame = new Game(ctx, gameWidth, gameHeight, 10);		// (context, x_boundary, y_boundary, ms_delay)
+CurrPlayer = new Player(50, 300);				// (x-position, y-position)
 
 Grass = new Platform();
 Grass.imageArray = new Array();
@@ -617,7 +605,7 @@ Block3.image.src 	  = "./Images/platform_underneath.png";
 Spike.image.src 	  = "./Images/spike_pit.png";	
 SpikeColumn.image.src = "./Images/spike_lower.png";
 
-Buckingham.image.src  = "./Images/bucky_small.gif";
+CurrPlayer.image.src  = "./Images/char_small.gif";
 scorebar = new Image();
 scorebar.src = "./Images/scorebar.jpg";
 
@@ -714,18 +702,18 @@ function drawUI(context){
 		context.fillStyle = "rgb(240,240,240)";
 		context.fillText("FPS-Avg: " 			+ fps.toFixed(0), 											120, 	20);
 		context.fillText("FPS-Imm: " 			+ thisFrameFPS.toFixed(2), 									120, 	35);
-		context.fillText("Collided: " 			+ Buckingham.grounded || Buckingham.grounded_last_frame, 	600, 	35);
-		context.fillText("Dist-Since-Change: " 	+ Buckingham.distance_since_sprite_change.toFixed(2), 		600, 	20);
+		context.fillText("Collided: " 			+ CurrPlayer.grounded || CurrPlayer.grounded_last_frame, 	600, 	35);
+		context.fillText("Dist-Since-Change: " 	+ CurrPlayer.distance_since_sprite_change.toFixed(2), 		600, 	20);
 	} else {
 		// draw normal UI
 		context.drawImage(Beer.image, 15, 12);
 		context.font = '25px Calibri';
 		context.fillStyle = "rgb(240,240,240)";
 		context.fillText(" x ", 37, 32);
-		context.fillText("   " + booze_count + "/" + beerTotal, 40, 33);
+		context.fillText("   " + collectable_count, 40, 33);
 	}
 
-	if(Buckingham.dead){
+	if(CurrPlayer.dead){
 		context.font = '30px Calibri';
 		context.fillText("You dead bro?",																230,	35);
 	}
@@ -742,24 +730,24 @@ function drawUI(context){
 	///////////////////////////////////////////////////////////////////// ACTIONS TO DO BEFORE DRAWING (good place to update shit)
 function frame(){
 
-	if(Controller.down) Buckingham.dead = false;
+	if(Controller.down) CurrPlayer.dead = false;
 
 	alpha = 1;
-	if(booze_count>10){
-		alpha = (20/booze_count);
+	if(collectable_count>10){
+		alpha = (20/collectable_count);
 	}
 	if(alpha < 0.3){
 		alpha = 0.3;
 	}
 
-		BuckyGame.clearColor = "rgba(135,206,235," + alpha + ")";
+		PlayerGame.clearColor = "rgba(135,206,235," + alpha + ")";
 
 	if(document.activeElement.id == "draw_canvas" && windowActive){
 		///////////////////////////////////////////////////////////////////////////////////// UPDATE DAT BUCKY
-		Buckingham.update();
+		CurrPlayer.update();
 	}
 	
-	screenClear(BuckyGame);
+	screenClear(PlayerGame);
 
 	gametimeout = setTimeout(frame, 5);
 	draw_world();
@@ -787,12 +775,14 @@ function draw_world() {
 
 	var canvas = document.getElementById("draw_canvas");
 
-	if (BuckyGame.state == GAMESTATE_GAMEPLAY) {
+
+	if (PlayerGame.state == GAMEPLAY) {
+
 
 
 		if(Controller.click_mouse_y <= ResetButton.y+ResetButton.height && Controller.click_mouse_y >= ResetButton.y
 			&& Controller.click_mouse_x <= ResetButton.x+ResetButton.width && Controller.click_mouse_x >=ResetButton.x){
-			BuckyGame.resetGame();
+			PlayerGame.resetGame();
 		}
 
 		ctx = canvas.getContext("2d");
@@ -817,7 +807,7 @@ function draw_world() {
 			}
 		
 			////////////////////////////////////////////////////////////////////////////////////////// DRAW DAT BUCKY
-		drawObject(Buckingham, ctx);
+		drawObject(CurrPlayer, ctx);
 
 			////////////////////////////////////////////////////////////////////////////////////////// DRAW UI
 		drawUI(ctx);
@@ -847,12 +837,16 @@ function draw_world() {
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////// SPLASH SCREEN IF-BLOCK
+
 	} /*else if(BuckyGame.state == GAMESTATE_CREDITS){
+
 		ctx.drawImage(splashImage, -50, -50);
 		PlayButton.draw();
 		if(Controller.click_mouse_y <= PlayButton.y+PlayButton.height && Controller.click_mouse_y >= PlayButton.y
 			&& Controller.click_mouse_x <= PlayButton.x+PlayButton.width && Controller.click_mouse_x >=PlayButton.x){
-			BuckyGame.state = GAMESTATE_GAMEPLAY;
+
+			PlayerGame.state = GAMEPLAY;
+
 		}
 	} */else if(BuckyGame.state == GAMESTATE_START){
 		ctx.drawImage(splashImage, -50, -50);
