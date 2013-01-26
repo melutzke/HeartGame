@@ -36,12 +36,9 @@ var platform_update = 0;
 var thisFrameFPS = 0;
 var windowActive = true;
 var startScreen = new Image();
-<<<<<<< HEAD
 var creditScreen1 = new Image();
 var creditScreen2 = new Image();
-=======
 var optionsScreen = new Image();
->>>>>>> Added Basic Options Screen
 
 
 char_right_jump.src = 		"./Images/bucky_right_jump.gif";
@@ -52,17 +49,13 @@ char_right_second.src = 	"./Images/bucky_right_second.gif";
 char_left_second.src = 		"./Images/bucky_left_second.gif";
 background.src = 			"./Images/test_background1.jpg";
 startScreen.src = 			"./Images/start_screen.fw.png";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 creditScreen1.src =         "./Images/test_background.jpg";
  
->>>>>>> Credz button works.
-=======
+
 optionsScreen.src = 		"./Images/options_screen.fw.png";
 
 
->>>>>>> Added Basic Options Screen
 background2.src = 			"./Images/test_background2.png";
 
 
@@ -630,13 +623,9 @@ Button_Start_Options = new Button(500, 350, 100, 30, "Options", ctx);
 Button_Start_Credits = new Button(500, 450, 100, 30, "Credz", ctx);
 
 //GAMESTATE_GAMEPLAY
-<<<<<<< HEAD
 Button_Gameplay_Reset = new Button(1000, 10, 120, 30, "Reset Game", ctx);
-Button_Gameplay_Options = new Button(750, 10, 100, 30, "Options", ctx);
-=======
-Button_Gameplay_Reset = new Button(850, 10, 125, 30, "Reset Game", ctx);
-Button_Gameplay_Options = new Button(1000, 10, 100, 30, "Options", ctx);
->>>>>>> Added Basic Options Screen
+Button_Gameplay_Options = new Button(850, 10, 100, 30, "Options", ctx);
+
 
 
 //GAMESTATE_OPTIONS
@@ -900,7 +889,6 @@ function draw_world() {
 			PlayerGame.state = GAMESTATE_GAMEPLAY;
 					
 		}	
-<<<<<<< HEAD
 		
 		
 		if(Button_Start_Credits.clicked())
@@ -908,14 +896,12 @@ function draw_world() {
 			PlayerGame.state = GAMESTATE_CREDITS;	
 		}
 		
-=======
 
 		if(Button_Start_Options.clicked()){
 			PlayerGame.state = GAMESTATE_OPTIONS;
 					
 		}	
 
->>>>>>> Added Basic Options Screen
 	}else if(PlayerGame.state == GAMESTATE_CREDITS){
 		
 		ctx.drawImage(creditScreen1, 0, 0);
