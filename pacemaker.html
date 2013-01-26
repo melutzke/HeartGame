@@ -598,7 +598,7 @@ Beer = new Item();
 
 Spike = new Platform();
 SpikeColumn = new Platform();
-Beer.image.src = "./Images/beer_mug.png";
+Beer.image.src = "./Images/redbloodcell.png";
 
 //Block.image.src = "platform_placeholder.gif";
 Block.image.src 	  = "./Images/platform.png";
@@ -732,8 +732,8 @@ function drawUI(context){
 		context.drawImage(Beer.image, 15, 12);
 		context.font = '25px Calibri';
 		context.fillStyle = "rgb(240,240,240)";
-		context.fillText(" x ", 37, 32);
-		context.fillText("   " + collectable_count, 40, 33);
+		context.fillText(" x ", 57, 42);
+		context.fillText("   " + collectable_count, 60, 43);
 	}
 
 	if(CurrPlayer.dead){
