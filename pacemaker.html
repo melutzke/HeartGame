@@ -371,7 +371,7 @@ function update_platforms(x_change){
 }
 
 		/////////////////////////////////////////////////////////////////////////////////GODDAMN AWESOME AS SHIT BUTTONS (not really)
-function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx) {
+function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx, isTrans) {
 	this.x = x_pos;
 	this.y = y_pos;
 	this.width = b_width;
@@ -384,6 +384,7 @@ function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx) {
 	this.clicked = clicked;
 
 	function draw(){
+		if (!isTrans) { // Used to make actual buttons invisible because text is an image
 		this.ctx.fillStyle = this.fill;
 		this.ctx.strokeStyle = this.stroke;
 		this.ctx.lineWidth   = 1;
@@ -400,6 +401,7 @@ function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx) {
 
     	this.ctx.fillStyle = this.stroke;
     	this.ctx.fillText(this.text, textX, this.y + this.height/2 + 7);
+    };
 	}
 
 	function clicked(){
@@ -627,19 +629,18 @@ scorebar.src = "./Images/scorebar.jpg";
 
 //Syntax for buttons --> What Gamestate it is at _ What Gamestate it is going to
 //GAMESTATE_START
-
-Button_Start_Play = new Button(550, 250, 100, 30, "Play Game", ctx);
-Button_Start_Options = new Button(550, 350, 100, 30, "Options", ctx);
-Button_Start_Credits = new Button(550, 450, 100, 30, "Credz", ctx);
+Button_Start_Play = new Button(916, 280, 120, 50, "Play Game", ctx, true);
+Button_Start_Options = new Button(856, 355, 180, 50, "Options", ctx, true);
+Button_Start_Credits = new Button(876, 430, 160, 50, "Credz", ctx, true);
 
 //GAMESTATE_GAMEPLAY
-Button_Gameplay_Reset = new Button(1000, 10, 120, 30, "Reset Game", ctx);
-Button_Gameplay_Options = new Button(850, 10, 100, 30, "Options", ctx);
+Button_Gameplay_Reset = new Button(1000, 10, 120, 30, "Reset Game", ctx, false);
+Button_Gameplay_Options = new Button(850, 10, 100, 30, "Options", ctx, false);
 
 
 
 //GAMESTATE_OPTIONS
-Button_Options_Start = new Button(550, 500, 100, 30, "Main Menu", ctx);
+Button_Options_Start = new Button(550, 500, 100, 30, "Main Menu", ctx, false);
 
 
 
@@ -647,7 +648,7 @@ Button_Options_Start = new Button(550, 500, 100, 30, "Main Menu", ctx);
 
 
 //GAMESTATE_CREDITS
-Button_Credits_MainMenu = new Button(500, 500, 100, 30, "Main Menu", ctx);
+Button_Credits_MainMenu = new Button(500, 500, 100, 30, "Main Menu", ctx, false);
 
 
 
