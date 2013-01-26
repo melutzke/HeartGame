@@ -9,6 +9,7 @@ var GAMESTATE_OPTIONS = 2;
 var GAMESTATE_CREDITS = 3;
 
 var background = new Image();
+var background2 = new Image();
 var blocksize = 25;
 var collectable_count = 0;
 var char_left = new Image();
@@ -46,7 +47,11 @@ char_left.src = 			"./Images/bucky_left.gif";
 char_right_second.src = 	"./Images/bucky_right_second.gif";
 char_left_second.src = 		"./Images/bucky_left_second.gif";
 background.src = 			"./Images/test_background.jpg";
+
 startScreen.src = 			"./Images/start_screen.fw.png";
+
+background2.src = 			"./Images/test_background2.png";
+
 
 	// nice little piece of code that uses a browser's native
 	// request animation frame function if it exists. If it doesn't,
@@ -783,6 +788,10 @@ function draw_world() {
 		ctx.drawImage(background, Math.round(platform_x_movement*(0.3)%background.width-background.width), 0);
 		ctx.drawImage(background, Math.round(platform_x_movement*(0.3)%background.width), 0);
 		ctx.drawImage(background, Math.round(platform_x_movement*(0.3)%background.width+background.width), 0);
+
+		ctx.drawImage(background2, Math.round(platform_x_movement*(0.6)%background.width-background.width), 0);
+		ctx.drawImage(background2, Math.round(platform_x_movement*(0.6)%background.width), 0);
+		ctx.drawImage(background2, Math.round(platform_x_movement*(0.6)%background.width+background.width), 0);
 	
 
 			////////////////////////////////////////////////////////////////////////////////////////// DRAW EACH INDIVIDUAL TILE WHERE IT GOES
