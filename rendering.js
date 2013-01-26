@@ -63,6 +63,25 @@ function draw_game() {
 	}
 }
 
+
+function screenClear(currentGame){ 
+	ctx.fillStyle = currentGame.clearColor;
+	ctx.fillRect(0, 0, currentGame.x_boundary, currentGame.y_boundary);
+	return true;
+}
+
+		////////////////////////////////////////////////////////////////////////////////////////// AVOID THIS SHIT
+function drawObject(drawableObject, ctx){
+	ctx.save();
+	ctx.translate(drawableObject.x,drawableObject.y);
+	//ctx.translate(drawableObject.width/2,drawableObject.height/2)
+	ctx.rotate(drawableObject.rotation) ;
+	ctx.drawImage(drawableObject.image, -drawableObject.width/2, -drawableObject.height/2, drawableObject.width, drawableObject.height);
+	ctx.restore();	
+	return true;
+}
+
+
 	////////////////////////////////////////////////////////////////////////////////////////// DRAW EVERYTHING
 function draw_world() {  
 

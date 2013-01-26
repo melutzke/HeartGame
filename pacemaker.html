@@ -85,17 +85,6 @@ function Game(ctx, x_boundary, y_boundary, frame_delay){
 	}
 }
 
-function screenClear(currentGame){ 
-	ctx.fillStyle = currentGame.clearColor;
-	ctx.fillRect(0, 0, currentGame.x_boundary, currentGame.y_boundary);
-	return true;
-}
-		////////////////////////////////////////////////////////////////////////////////////////// AVOID THIS SHIT
-function drawObject(drawableObject, ctx){
-	ctx.drawImage(drawableObject.image, Math.round(drawableObject.x), Math.round(drawableObject.y), drawableObject.width, drawableObject.height);
-	return true;
-}
-
 
 
 	////////////////////////////////////////////////////////////////////////////////////////// UP DRAWN TO SCREEN
@@ -149,7 +138,6 @@ function frame(){
 	//window.requestAnimationFrame(frame);
 	gametimeout = setTimeout(frame, 16);
 	draw_world();
-
 
 	// IGNORE FRAME STUFF, it is used for accurate movement / fps counter
 	thisFrameFPS = 1000 / ((now=new Date) - lastUpdate);
