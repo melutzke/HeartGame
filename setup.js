@@ -218,6 +218,11 @@ console.log(gamepad);
 	SpikeColumn = new Platform();
 	Cell.image.src = "./Images/redbloodcell.png";
 
+
+	Jump = new Platform();
+	Jump.image.src = "./Images/jump.fw.png";
+
+
 	//Block.image.src = "platform_placeholder.gif";
 	Block.image.src 	  = "./Images/platform.png";
 	Block2.image.src 	  = "./Images/platform_only.png";
@@ -262,7 +267,7 @@ console.log(gamepad);
 				}
 				// handle blue platforms
 				if(map[i][k]==2){
-					imageMap[i][k] = Block.image;
+					imageMap[i][k] = Jump.image;
 				}
 				// handle spikes and their tiling
 				if(map[i][k]==4){
