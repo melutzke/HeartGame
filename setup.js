@@ -4,17 +4,7 @@ var GAMESTATE_OPTIONS = 2;
 var GAMESTATE_CREDITS = 3;
 
 var canvas; 
-
-var padLast = new Array();
-	padLast['A'] = false;
-	padLast['B'] = false;
-	padLast['X'] = false;
-	padLast['DPAD_LEFT'] = false;
-	padLast['DPAD_RIGHT'] = false;
-	padLast['DPAD_UP'] = false;
-	padLast['DPAD_DOWN'] = false;
-
-
+var ControllerUse = false;
 var background = new Image();
 var background2 = new Image();
 var blocksize = 50;
@@ -65,11 +55,11 @@ creditNameMitchell.src =    "./Images/MitchDeezy.png";
 creditNameJason.src    =    "./Images/JasonUltraKra.png";
 creditNameJesse.src    =    "./Images/JesseKrize.png";
 
-char_right_jump.src = 		"./Images/cellman_jumping.png";
+char_right_jump.src = 		"./Images/bucky_right_jump.gif";
 char_left_jump.src = 		"./Images/bucky_left_jump.gif";
-char_right.src = 			"./Images/cellman_running.png";
+char_right.src = 			"./Images/bucky_right.gif";
 char_left.src = 			"./Images/bucky_left.gif";
-char_right_second.src = 	"./Images/cellman_running2.png";
+char_right_second.src = 	"./Images/bucky_right_second.gif";
 char_left_second.src = 		"./Images/bucky_left_second.gif";
 background.src = 			"./Images/test_background1.jpg";
 startScreen.src = 			"./Images/start_screen.fw.png";
@@ -119,6 +109,10 @@ function begin_game() {
 
 
 
+
+
+
+
 gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
     // a new gamepad connected
 });
@@ -138,31 +132,47 @@ gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
 	for (control in gamepads[0].state) {
 		//value = gamepads[i].state[control];
 		
-		if(gamepads[0].state['A'] != padLast['A']){
-			gamepads[0].state['A'] = !gamepads[0].state['A'];
-			Controller.space = !Controller.space;
-		}
-		if(gamepads[0].state['X'] != padLast['X']){
-			gamepads[0].state['X'] = !gamepads[0].state['X'];
-			Controller.shift = !Controller.shift;
-		}
-		if(gamepads[0].state['DPAD_LEFT'] != padLast['DPAD_LEFT']){
-			gamepads[0].state['DPAD_LEFT'] = !gamepads[0].state['DPAD_LEFT'];
-			Controller.left = !Controller.left;
-		}
-		if(gamepads[0].state['DPAD_RIGHT'] != padLast['DPAD_RIGHT']){
-			gamepads[0].state['DPAD_RIGHT'] = !gamepads[0].state['DPAD_RIGHT'];
-			Controller.right = !Controller.right;
-		}
-		if(gamepads[0].state['DPAD_UP'] != padLast['DPAD_UP']){
-			gamepads[0].state['DPAD_UP'] = !gamepads[0].state['DPAD_UP'];
-			Controller.up = !Controller.up;
-		}
-		if(gamepads[0].state['DPAD_DOWN'] != padLast['DPAD_DOWN']){
-			gamepads[0].state['DPAD_DOWN'] = !gamepads[0].state['DPAD_DOWN'];
-			Controller.down = !Controller.down;
+		if(gamepads[0].state['A']){
+			ControllerUse = true;
+			Controller.space = true;
+		} else if(gamepadSupport && ControllerUse){
+			Controller.space = false;
 		}
 
+		if(gamepads[0].state['X']){
+			ControllerUse = true;
+			Controller.shift = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.shift = false;
+		}
+
+		if(gamepads[0].state['DPAD_LEFT']){
+			ControllerUse = true;
+			Controller.left = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.left = false;
+		}
+
+		if(gamepads[0].state['DPAD_RIGHT']){
+			ControllerUse = true;
+			Controller.right = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.right = false;
+		}
+
+		if(gamepads[0].state['DPAD_UP']){
+			ControllerUse = true;
+			Controller.up = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.up = false;
+		}
+
+		if(gamepads[0].state['DPAD_DOWN']){
+			ControllerUse = true;
+			Controller.down = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.down = false;
+		}
 	}
 
 
@@ -218,11 +228,6 @@ console.log(gamepad);
 	SpikeColumn = new Platform();
 	Cell.image.src = "./Images/redbloodcell.png";
 
-
-	Jump = new Platform();
-	Jump.image.src = "./Images/jump.fw.png";
-
-
 	//Block.image.src = "platform_placeholder.gif";
 	Block.image.src 	  = "./Images/platform.png";
 	Block2.image.src 	  = "./Images/platform_only.png";
@@ -267,7 +272,7 @@ console.log(gamepad);
 				}
 				// handle blue platforms
 				if(map[i][k]==2){
-					imageMap[i][k] = Jump.image;
+					imageMap[i][k] = Block.image;
 				}
 				// handle spikes and their tiling
 				if(map[i][k]==4){

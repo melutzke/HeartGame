@@ -31,25 +31,29 @@ function mouse_press(event) {
 
 	////////////////////////////////////////////////////////////////////////////////////////// KEY PRESSED DOWN
 function key_event(event) {
-	switch(event.keyCode){
-		case 16:				Controller.shift = true;		break;		// shift
-		case 32:				Controller.space = true;		break;		// space
-		case 39: case 68:		Controller.right = true;		break;		// right
-		case 37: case 65:		Controller.left = true;			break;		// left
-		case 38: case 87:		Controller.up = true; 			break;		// up
-		case 40: case 83:		Controller.down = true;			break;		// down
-		case 80:                Controller.p = !Controller.p;   break;      // p - pause
+	if(!ControllerUse){
+		switch(event.keyCode){
+			case 16:				Controller.shift = true;		break;		// shift
+			case 32:				Controller.space = true;		break;		// space
+			case 39: case 68:		Controller.right = true;		break;		// right
+			case 37: case 65:		Controller.left = true;			break;		// left
+			case 38: case 87:		Controller.up = true; 			break;		// up
+			case 40: case 83:		Controller.down = true;			break;		// down
+			case 80:                Controller.p = !Controller.p;   break;      // p - pause
+		}
 	}
 }
 	////////////////////////////////////////////////////////////////////////////////////////// KEY COMES BACK UP
 function key_event_up(event) {
-	switch(event.keyCode){
-		case 16:				Controller.shift = false;	break;		// shift
-		case 32:				Controller.space = false;	break;		// space
-		case 39: case 68:		Controller.right = false;	break;		// right
-		case 37: case 65:		Controller.left = false;	break;		// left
-		case 38: case 87:		Controller.up = false; 		break;		// up
-		case 40: case 83:		Controller.down = false;	break;		// down
+	if(!ControllerUse){
+		switch(event.keyCode){
+			case 16:				Controller.shift = false;	break;		// shift
+			case 32:				Controller.space = false;	break;		// space
+			case 39: case 68:		Controller.right = false;	break;		// right
+			case 37: case 65:		Controller.left = false;	break;		// left
+			case 38: case 87:		Controller.up = false; 		break;		// up
+			case 40: case 83:		Controller.down = false;	break;		// down
+		}
 	}
 }
 
