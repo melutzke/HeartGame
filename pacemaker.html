@@ -381,7 +381,7 @@ function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx) {
 
 	function clicked(){
 		return Controller.click_mouse_y <= this.y+this.height && Controller.click_mouse_y >= this.y
-			&& Controller.click_mouse_x <= this.x+this.width && Controller.click_mouse_x >=this.x;
+		&& Controller.click_mouse_x <= this.x+this.width && Controller.click_mouse_x >=this.x;
 	}
 }
 
@@ -552,6 +552,10 @@ function mouse_down(event) {
 		case 2: Controller.mouse_middle = true; break;
 		case 3: Controller.mouse_right = true; break;
 	}
+}
+
+function datpasta(){
+	alert("pasta");
 }
 
 	////////////////////////////////////////////////////////////////////////////////////////// SETTING THINGS UP INITIALLY
@@ -835,7 +839,7 @@ function draw_world() {
 		OptionsButton.draw();
 		CreditsButton.draw();
 		PlayButton.draw();
-		
+
 		if(PlayButton.clicked()){
 			PlayerGame.state = GAMESTATE_GAMEPLAY;
 		}
