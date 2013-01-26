@@ -621,6 +621,8 @@ Buckingham.image.src  = "./Images/bucky_small.gif";
 scorebar = new Image();
 scorebar.src = "./Images/scorebar.jpg";
 
+OptionsButton = new Button(500, 350, 100, 30, "Credz", ctx);
+CreditsButton = new Button(500, 250, 100, 30, "Credz", ctx);
 PlayButton = new Button(500, 450, 100, 30, "Play Game", ctx);
 ResetButton = new Button(650, 10, 120, 30, "Reset Game", ctx);
 
@@ -845,8 +847,17 @@ function draw_world() {
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////// SPLASH SCREEN IF-BLOCK
-	} else if(BuckyGame.state == GAMESTATE_START){
+	} /*else if(BuckyGame.state == GAMESTATE_CREDITS){
 		ctx.drawImage(splashImage, -50, -50);
+		PlayButton.draw();
+		if(Controller.click_mouse_y <= PlayButton.y+PlayButton.height && Controller.click_mouse_y >= PlayButton.y
+			&& Controller.click_mouse_x <= PlayButton.x+PlayButton.width && Controller.click_mouse_x >=PlayButton.x){
+			BuckyGame.state = GAMESTATE_GAMEPLAY;
+		}
+	} */else if(BuckyGame.state == GAMESTATE_START){
+		ctx.drawImage(splashImage, -50, -50);
+		OptionsButton.draw();
+		CreditsButton.draw();
 		PlayButton.draw();
 		if(Controller.click_mouse_y <= PlayButton.y+PlayButton.height && Controller.click_mouse_y >= PlayButton.y
 			&& Controller.click_mouse_x <= PlayButton.x+PlayButton.width && Controller.click_mouse_x >=PlayButton.x){
