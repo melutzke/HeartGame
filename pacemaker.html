@@ -8,8 +8,6 @@ var GAMESTATE_GAMEPLAY = 1;
 var GAMESTATE_OPTIONS = 2;
 var GAMESTATE_CREDITS = 3;
 
-
-
 var background = new Image();
 var blocksize = 25;
 var collectable_count = 0;
@@ -360,6 +358,7 @@ function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx) {
 	this.draw = draw;
 	this.fill = "#E7D9C1";
 	this.stroke = "#000000";
+	this.clicked = clicked;
 
 	function draw(){
 		this.ctx.fillStyle = this.fill;
@@ -378,6 +377,11 @@ function Button(x_pos, y_pos, b_width, b_height, b_text, b_ctx) {
 
     	this.ctx.fillStyle = this.stroke;
     	this.ctx.fillText(this.text, textX, this.y + this.height/2 + 7);
+	}
+
+	function clicked(){
+		return Controller.click_mouse_y <= this.y+this.height && Controller.click_mouse_y >= this.y
+			&& Controller.click_mouse_x <= this.x+this.width && Controller.click_mouse_x >=this.x;
 	}
 }
 
@@ -831,8 +835,8 @@ function draw_world() {
 		OptionsButton.draw();
 		CreditsButton.draw();
 		PlayButton.draw();
-		if(Controller.click_mouse_y <= PlayButton.y+PlayButton.height && Controller.click_mouse_y >= PlayButton.y
-			&& Controller.click_mouse_x <= PlayButton.x+PlayButton.width && Controller.click_mouse_x >=PlayButton.x){
+		
+		if(PlayButton.clicked()){
 			PlayerGame.state = GAMESTATE_GAMEPLAY;
 		}
 	}
