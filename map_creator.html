@@ -8,8 +8,8 @@ var platforms = new Array();
 var num_collisions = 0;
 
 var blocksWidth		= parseInt(prompt("Enter how many blocks wide", ""));
-var blocksHeight	= parseInt(prompt("Enter how many blocks tall\n12 is recommended for PaceMaker", ""));
-alert("1 - 6 to select your tile.\nLeft Click Adds. Right Click Removes.\nShift to display array. ");
+var blocksHeight	= parseInt(prompt("Enter how many blocks tall\n13 is recommended for PaceMaker", ""));
+alert("1 - 5 to select your tile.\nLeft Click Adds. Right Click Removes.\nShift to display array. ");
 
 var gameWidth = blocksWidth * 50;
 var gameHeight = blocksHeight * 50;
@@ -137,8 +137,7 @@ function mouse_press(event) {
 function key_event(event) {
 	switch(event.keyCode){
 		case 16:				Controller.shift = true;	break;		// shift
-		case 54: 				Controller.six = true;		break;		// 6
-		case 53: 				Controller.five = true;		break;		// rightiafohssgoiuseghseiojnvgosjd;hsugfsjfousjbkghsubijfkhviusn.vbgfshfgbvsouifjbzhvouis
+		case 53: 				Controller.five = true;		break;		// right
 		case 52:				Controller.four = true;		break;		// left
 		case 51:				Controller.three = true; 	break;		// up
 		case 50:				Controller.two = true;		break;		// down
@@ -149,7 +148,6 @@ function key_event(event) {
 function key_event_up(event) {
 	switch(event.keyCode){
 		case 16:				Controller.shift = false;	break;		// shift
-		case 54:				Controller.six  = false;    break; ////////////////////////ewrtykjfsdarteyikjgfdsreytikjrwtyrhdf
 		case 53: 				Controller.five = false;	break;		// right
 		case 52:				Controller.four = false;	break;		// left
 		case 51:				Controller.three = false; 	break;		// up
@@ -270,9 +268,6 @@ function frame(){
     else if(Controller.five){
     	updateBlockChoice(5);
     }
-    else if(Controller.six){
-    	updateBlockChoice(6);
-    }
 
 
 	if(Controller.shift){
@@ -309,54 +304,43 @@ function draw_world() {
 	var canvas = document.getElementById("draw_canvas");
 	if (canvas.getContext) {
 		
-
 		ctx = canvas.getContext("2d");
 
-		Ground = new Platform();					// 1 = ground
-		Ground.image = new Image();
-		Ground.image.src = "./Images/platform.fw.png";
+		Grass = new Platform();
+		Block = new Platform();
+		Spike = new Platform();
+		Blood  = new Platform();
+		Enemy = new Platform();
 
-		Jump = new Platform();						// 2 = jump
-		Jump.image = new Image();
-		Jump.image.src = "./Images/jump.fw.png";
-
-		Duck = new Platform();						// 3 = duck
-		Duck.image = new Image();
-		Duck.image.src = "./Images/duck.fw.png";
-
-		Smash = new Platform();						// 5 = switch
-		Smash.image = new Image();
-		Smash.image.src = "./Images/smash.fw.png";
-
-		Switch = new Platform();					// 4 = smash
-		Switch.image = new Image();
-		Switch.image.src = "./Images/switch.fw.png";
-
-		Blood  = new Platform();					// 6 = collectable
+		Grass.image = new Image();
+		Block.image = new Image();
+		Spike.image = new Image();
 		Blood.image  = new Image();
+		Enemy.image = new Image();
+
+		Grass.image.src = "./Images/grass_tile.png";
+		Block.image.src = "./Images/platform.png";
+		Spike.image.src = "./Images/spike_pit.png";
 		Blood.image.src = "./Images/redbloodcell.png";
-		
+		Enemy.image.src = "./Images/generic_enemy_placeholder.gif";
 
 		// Draws out the map based on the values in the map array.
 		for(var i = 0; i<map.length; i++){
 			for(var k = 0; k<map[i].length; k++){
 				if(map[i][k]==1){
-					ctx.drawImage(Ground.image, k*50, i*50);
+					ctx.drawImage(Blood.image, k*50, i*50);
 				}
 				if(map[i][k]==2){
-					ctx.drawImage(Jump.image, k*50, i*50);
+					ctx.drawImage(Block.image, k*50, i*50);
 				}
 				if(map[i][k]==3){
-					ctx.drawImage(Duck.image, k*50, i*50);
+					ctx.drawImage(Enemy.image, k*50, i*50);
 				}
 				if(map[i][k]==4){
-					ctx.drawImage(Smash.image, k*50, i*50);
+					ctx.drawImage(Spike.image, k*50, i*50);
 				}
 				if(map[i][k]==5){
-					ctx.drawImage(Switch.image, k*50, i*50);
-				}
-				if(map[i][k]==6){
-					ctx.drawImage(Blood.image, k*50, i*50);
+					ctx.drawImage(Enemy.image, k*50, i*50);
 				}
 			}
 		}

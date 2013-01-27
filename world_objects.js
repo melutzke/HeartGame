@@ -33,14 +33,13 @@ function Player(x_pos, y_pos) {
 	this.speed = 5;			// speed (in pixels per frame)
 	this.airtime = 0;		// time bucky has been in the air (used for falling)
 	this.image = new Image();
-	this.width = 100;		// collision width of bucky (so he overlaps things a bit)
-	this.height = 100;		// collision height of bucky (so he overlaps things a bit)
+	this.width = 64;		// collision width of bucky (so he overlaps things a bit)
+	this.height = 80;		// collision height of bucky (so he overlaps things a bit)
 	this.grounded = false;
 	this.grounded_last_frame = false;
 	this.jump_hold_toggle = false;
 	this.dead = false;
 	this.walk_switch = false;
-	this.rotation  = 0;
 
 	this.update = update;	// when this.update is called, perform the update() function
 	this.detect_collision_platform = detect_collision_platform;
@@ -62,10 +61,12 @@ function Player(x_pos, y_pos) {
 			this.deathAnimToggle = true
 			//this.x_speed = 0;
 			//platform_update = 0;
+
 			// death animation
 			this.y_speed = 7;
 			this.y_dir = -1;
 			this.airtime = 0;
+
 		}
 
 		// If below the game, you should be dead
@@ -98,7 +99,7 @@ function Player(x_pos, y_pos) {
 					this.y_dir = -1;
 					this.y_speed = -18;
 				}
-				this.rotation = -.5;
+
 				this.jump_hold_toggle = true;	// set jump toggle to disable double jumping
 			}
 
@@ -114,15 +115,6 @@ function Player(x_pos, y_pos) {
 				this.x_dir = 0;
 				this.x_speed = 0;
 			}
-
-			// This overrides the code for controlling x speed with keys, as the new game autoscales
-			// WE CAN REMOVE THE CODE ABOE INCREMENTALLY AS WE WANT TO CLEAN STUFF UP
-			
-			if(!debug){
-				this.x_speed = 10;
-				this.x_dir = 1;
-			}
-			
 		
 		}
 		
@@ -136,13 +128,8 @@ function Player(x_pos, y_pos) {
 			this.y_dir = -1;
 		}
 
-		// set new y position, make sure that
-		if ( Math.abs(new_y_speed * fpsControl) > blocksize / 2 - 1){
-			this.y += this.y_dir * blocksize / 2 - 1;
-		}
-		else{
-			this.y += new_y_speed * fpsControl;
-		}
+		// set new y position
+		this.y += new_y_speed * fpsControl;
 
 
 		// if we've moved too far from the left edge, scroll screen instead of character
@@ -183,16 +170,8 @@ function Player(x_pos, y_pos) {
 
 		// if you haven't collided increase counter that tracks "air time" by arbitrary .24 amount
 		if(!this.grounded){
-			console.log(this.grounded)
-		
 			this.airtime += 0.24*fpsControl;
-			if(this.airtime > 1.1){
-					this.rotation+=.1
-			}
 		} 
-		else{
-			this.rotation = 0;
-		}
 
 		// after position has been updated, detect platform collision issues and resolve them
 		if(!this.dead){
@@ -202,7 +181,7 @@ function Player(x_pos, y_pos) {
 
 		// loop through each collectable item. If the dist between it and character is small, collect it
 		for(var i = 0; i<collectable.length; i++){
-			if(distanceBetween(this, collectable[i]) < this.height/2){
+			if(distanceBetween(this, collectable[i]) < 30){
 				collectable[i].hidden = true;
 				collectable_count++;
 				collectable.splice(i, 1);
@@ -219,11 +198,9 @@ function Player(x_pos, y_pos) {
 		// change to facing right image if moving right, or not moving
 		if(this.x_dir == 1 || this.x_dir == 0){
 			if(this.walk_switch && this.airtime < 0.5){
-				this.rotation = 0;
 				this.image = char_right_second;
 			} else if (this.airtime < 0.5){
 				this.image = char_right;
-				this.rotation = 0;
 			} else {
 				this.image = char_right_jump;
 			}
@@ -231,9 +208,7 @@ function Player(x_pos, y_pos) {
 			// change to facing left image if moving left
 			if(this.walk_switch && this.airtime < 0.5){
 				this.image = char_left_second;
-				this.rotation = 0;
 			} else if(this.airtime < 0.5) {
-				this.rotation = 0;
 				this.image = char_left;
 			} else {
 				this.image = char_left_jump;
@@ -283,6 +258,10 @@ function Player(x_pos, y_pos) {
 					this.airtime = 0;
 					this.y_speed = 0;
 					this.grounded = true;
+					if(platforms[i].type == 4){
+						this.dead = true;
+						this.y += 20; // impale him a bit
+					}
 				} else {
 					if(grav_const == 1){
 						this.airtime = 4.5;
