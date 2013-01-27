@@ -117,19 +117,160 @@ function draw_world() {
 
 	}else if(PlayerGame.state == GAMESTATE_CREDITS){
 		ctx.drawImage(creditScreen1, 0, 0);
-		//ctx.drawImage(creditScreen2, 0, 0)
 		//left side
-	    ctx.drawImage(creditNameMitchell, 50, 100, 100, 30);
-		ctx.drawImage(creditNameAlex, 50, 350);
-		ctx.drawImage(creditNameNick, 50, 550);
+		
+		ctx.drawImage(creditNameMitchell, 50, 50, 200, 100);
+	    ctx.drawImage(creditNameAlex,     50, 150, 200, 100);
+		ctx.drawImage(creditNameNick,     50, 250, 200, 100);
 		//right side
-        ctx.drawImage(creditNameJason, 350, 100);
-        ctx.drawImage(creditNameJesse, 350, 350);
+        ctx.drawImage(creditNameJason, 350, 125, 200, 100);
+        ctx.drawImage(creditNameJesse, 350, 300, 200, 100);
+
+  
+		MatrixEffect();
+		IntToAscii(750, 200);
+		
+		
+		
+		
+		
+			                ctx.font = 'bold 40px Calibri';
+				    ctx.fillStyle = "rgb(255, 255, 255)";
+				    ctx.strokeStyle = 'white';
+		            ctx.lineWidth   = 10;
+	                ctx.fillText(aMitchellM, 50, 50);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		Button_Credits_MainMenu.draw();
 
 		if(Button_Credits_MainMenu.clicked()){
 			PlayerGame.state = GAMESTATE_START;
 		}
+		
+		
 	}
+//end function draw_world()
 }
+
+
+
+function MatrixEffect(){
+
+
+           ctx.drawImage(alphabetSoup[iArrayPosition], 750, 530);
+           //iArrayPosition++;
+           
+           
+           //if(iArrayPosition >= 3){
+           	
+           //    iArrayPosition = 0;
+           //}
+           
+           //ctx.fillStyle = "rgb(0, 0, 0)";
+           //ctx.fillText("sdf", 370, 130);
+
+      
+}
+
+
+
+
+function IntToAscii(iXStartPosition, iYStartPosition){
+	
+		//var iXTextPosition = 0;
+        //var iYTextPosition = 0;
+		
+		var x = String.fromCharCode(iCounter);
+		
+		ctx.font = 'bold 40px Calibri';
+		ctx.fillStyle = "rgb(255, 255, 255)";
+
+		ctx.strokeStyle = 'white';
+		ctx.lineWidth   = 10;
+	    ctx.fillText(x, iXStartPosition, iYStartPosition);
+				
+	    //ctx.drawImage(creditNameMitchell, 50, 50, 200, 100);
+	    //ctx.drawImage(creditNameAlex,     50, 150, 200, 100);
+		//ctx.drawImage(creditNameNick,     50, 250, 200, 100);
+		
+		
+		if(bMitchellM == 0){
+		    //iStringPosition = sMitchellM.length;
+			
+			//change to a while
+			if(iStringPosition < sMitchellM.length){
+
+				if(x == sMitchellM.charAt(iStringPosition)){
+					
+					ctx.font = 'bold 40px Calibri';
+				    ctx.fillStyle = "rgb(255, 255, 255)";
+				    ctx.strokeStyle = 'white';
+		            ctx.lineWidth   = 10;
+	                ctx.fillText(x, iXTextPosition, iYTextPosition);
+	                
+	                
+	                
+	                aMitchellM[iStringPosition] = x;         
+	                
+	                iXTextPosition += 40;
+	                iCounter = 32;
+	                iStringPosition++;
+	                
+	                
+	                ctx.font = 'bold 40px Calibri';
+				    ctx.fillStyle = "rgb(255, 255, 255)";
+				    ctx.strokeStyle = 'white';
+		            ctx.lineWidth   = 10;
+	                ctx.fillText(aMitchellM, 50, 50);
+	                
+				}
+				
+				else if(iCounter != sMitchellM.charAt(iStringPosition)){
+					iCounter++;
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		if(bJasonA == 0){
+			
+		}
+		
+		if(bAlexS == 0){
+			
+		}
+		
+		if(bNickH == 0){
+			
+		}
+		
+		if(bJesseK == 0)
+		{
+		
+		   iCounter++;
+		}
+		
+		
+		
+		
+		//if(iCounter <= iCounterMax)
+		//{
+		//	iCounter = iCounterMin;
+		//}
+	
+}
+

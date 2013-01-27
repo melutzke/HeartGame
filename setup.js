@@ -3,8 +3,12 @@ var GAMESTATE_GAMEPLAY = 1;
 var GAMESTATE_OPTIONS = 2;
 var GAMESTATE_CREDITS = 3;
 
+
 var canvas; 
 var ControllerUse = false;
+
+
+
 var background = new Image();
 var background2 = new Image();
 var blocksize = 50;
@@ -46,6 +50,55 @@ var creditNameNick     = new Image();
 var creditNameMitchell = new Image();
 var creditNameJason    = new Image();
 var creditNameJesse    = new Image();
+
+var a = new Image();
+var b = new Image();
+var c = new Image();
+		
+		a.src = "./Images/a.png";
+		b.src = "./Images/b.png";
+		c.src = "./Images/c.png";
+			
+		var alphabetSoup = new Array();
+		alphabetSoup[0] = a;
+		alphabetSoup[1] = b;
+		alphabetSoup[2] = c;
+
+
+var sMitchellM = "MITCHELL LUTZKE";
+var sAlexS     = "ALEX SOHAIL";
+var sNickH     = "NICK HEINDL";
+var sJasonA    = "JASON ALTEKRUSE";
+var sJesseK    = "JESSE KRIZENESKY";
+
+
+var aMitchellM = new Array();
+var aAlexS     = new Array();
+var aNickH     = new Array();
+var aJasonA    = new Array();
+var aJesseK    = new Array();
+
+
+
+var iStringPosition = 0;
+
+
+
+var bJesseK    = 1;
+var bNickH     = 1;
+var bMitchellM = 0;
+var bAlexS     = 1;
+var bJasonA    = 1;
+
+
+
+var iXTextPosition = 50;
+var iYTextPosition = 100;
+
+var iCounter = 33;
+var iCounterMin = 33;
+var iCounterMax = 126;
+var iArrayPosition = 0;
 
 creditScreen1.src =         "./Images/test_background.jpg";
 //creditScreen2.src      =    "./Images/"
