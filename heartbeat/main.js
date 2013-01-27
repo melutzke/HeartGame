@@ -103,7 +103,7 @@ function draw(ctx){
 	ctx.fillStyle = 'rgba(255,0,0,.8)';
 	ctx.fillRect(180,55,model.heartman.health/model.heartman.maxhealth * 550,35);
 	
-	ctx.drawImage(enemyheartlogoimg, 150,25);
+	ctx.drawImage(enemyheartlogoimg, 120,10,150,100);
 
 
 }
@@ -136,7 +136,6 @@ function punch_right(){
 
 function key_down(e){
 	var target
-	console.log(e.keyCode);
 	if(!model.punchingLeft){
 	if(e.keyCode == 65){
 		punch_left();
@@ -150,7 +149,6 @@ function key_down(e){
 function mouse_move(e){
 	model.mouseX = e.clientX - model.canvas.offsetLeft;
 	model.mouseY = e.clientY - model.canvas.offsetTop;
-	
 }
 
 function mouse_down(e){

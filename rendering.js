@@ -17,7 +17,7 @@ function draw_game() {
 
 		////////////////////////////////////////////////////////////////////////////////////////// DRAW EACH COLLECTABLE
 		for(var i = 0; i<collectable.length; i++){
-			// handle collectables
+			// handle booze collectables
 			if(!collectable[i].hidden){
 				ctx.drawImage(Cell.image, collectable[i].x+Math.floor(platform_x_movement), Math.floor(collectable[i].y));
 			}
@@ -30,15 +30,15 @@ function draw_game() {
 	drawUI(ctx);
 
 		////////////////////////////////////////////////////////////////////////////////////////// DRAW BUTTON
-	Button_Gameplay_Reset.draw();
-	Button_Gameplay_Options.draw();
+	//Button_Gameplay_Reset.draw();
+	//Button_Gameplay_Options.draw();
 
 	//**************************************************************************************************** Buttons
-	if(Button_Gameplay_Reset.clicked()){
+	if(Button_Gameplay_Reset.update()){
 		PlayerGame.resetGame();
 	}
 
-	if(Button_Gameplay_Options.clicked()){
+	if(Button_Gameplay_Options.update()){
 		PlayerGame.state = GAMESTATE_OPTIONS;
 	}
 		////////////////////////////////////////////////////////////////////////////////////////// DRAW SEXY GRID
@@ -63,73 +63,202 @@ function draw_game() {
 	}
 }
 
-
-function screenClear(currentGame){ 
-	ctx.fillStyle = currentGame.clearColor;
-	ctx.fillRect(0, 0, currentGame.x_boundary, currentGame.y_boundary);
-	return true;
-}
-
-		////////////////////////////////////////////////////////////////////////////////////////// AVOID THIS SHIT
-function drawObject(drawableObject, ctx){
-	ctx.save();
-	ctx.translate(drawableObject.x,drawableObject.y);
-	//ctx.translate(drawableObject.width/2,drawableObject.height/2)
-	ctx.rotate(drawableObject.rotation) ;
-	ctx.drawImage(drawableObject.image, 0, 0, drawableObject.width, drawableObject.height);
-	ctx.restore();	
-	return true;
-}
-
-
 	////////////////////////////////////////////////////////////////////////////////////////// DRAW EVERYTHING
 function draw_world() {  
 
 	var canvas = document.getElementById("draw_canvas");
 
-	if (PlayerGame.state == GAMESTATE_GAMEPLAY){
+	if (PlayerGame.state == GAMESTATE_GAMEPLAY) {
 		draw_game();
-	}else if(PlayerGame.state == GAMESTATE_OPTIONS){
-		ctx.drawImage(optionsScreen, 0, 0);
-		Button_Options_Start.draw();
+				////////////////////////////////////////////////////////////////////////////////////////// SPLASH SCREEN IF-BLOCK
 
-		if(Button_Options_Start.clicked()){
+	} else if(PlayerGame.state == GAMESTATE_OPTIONS){
+
+		ctx.drawImage(optionsScreen, 0, 0);
+		Button_Options_Start.update();
+
+		if(Button_Options_Start.update()){
 			PlayerGame.resetGame();              //reset the game so that you don't start a game at your previous progress/death
 			PlayerGame.state = GAMESTATE_START;
 		}
-	}else if(PlayerGame.state == GAMESTATE_START){
-		ctx.drawImage(startScreen, 0, 0);
-		Button_Start_Options.draw();
-		Button_Start_Credits.draw();
-		Button_Start_Play.draw();
 
-		if(Button_Start_Play.clicked()){
+	} 
+
+	else if(PlayerGame.state == GAMESTATE_START){
+		ctx.drawImage(startScreen, 0, 0);
+
+
+		if(Button_Start_Play.update()){
 			PlayerGame.state = GAMESTATE_GAMEPLAY;			
 		}	
 		
-		if(Button_Start_Credits.clicked()){
+		if(Button_Start_Credits.update()){
 			PlayerGame.state = GAMESTATE_CREDITS;	
 		}
 		
-		if(Button_Start_Options.clicked()){
+		if(Button_Start_Options.update()){
 			PlayerGame.state = GAMESTATE_OPTIONS;			
+
 		}	
 
 	}else if(PlayerGame.state == GAMESTATE_CREDITS){
 		ctx.drawImage(creditScreen1, 0, 0);
-		//ctx.drawImage(creditScreen2, 0, 0)
 		//left side
-	    ctx.drawImage(creditNameMitchell, 50, 100, 100, 30);
-		ctx.drawImage(creditNameAlex, 50, 350);
-		ctx.drawImage(creditNameNick, 50, 550);
+		
+		ctx.drawImage(creditNameMitchell, 50, 50, 200, 100);
+	    ctx.drawImage(creditNameAlex,     50, 150, 200, 100);
+		ctx.drawImage(creditNameNick,     50, 250, 200, 100);
 		//right side
-        ctx.drawImage(creditNameJason, 350, 100);
-        ctx.drawImage(creditNameJesse, 350, 350);
+
+        ctx.drawImage(creditNameJason, 350, 125, 200, 100);
+        ctx.drawImage(creditNameJesse, 350, 300, 200, 100);
+
+  
+		MatrixEffect();
+		IntToAscii(750, 200);
+		
+		
+		
+		
+		
+			                ctx.font = 'bold 40px Calibri';
+				    ctx.fillStyle = "rgb(255, 255, 255)";
+				    ctx.strokeStyle = 'white';
+		            ctx.lineWidth   = 10;
+	                ctx.fillText(aMitchellM, 50, 50);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		Button_Credits_MainMenu.draw();
 
-		if(Button_Credits_MainMenu.clicked()){
+
+		if(Button_Credits_MainMenu.update()){
 			PlayerGame.state = GAMESTATE_START;
 		}
+		
+		
 	}
+//end function draw_world()
 }
+
+
+
+function MatrixEffect(){
+
+
+           ctx.drawImage(alphabetSoup[iArrayPosition], 750, 530);
+           //iArrayPosition++;
+           
+           
+           //if(iArrayPosition >= 3){
+           	
+           //    iArrayPosition = 0;
+           //}
+           
+           //ctx.fillStyle = "rgb(0, 0, 0)";
+           //ctx.fillText("sdf", 370, 130);
+
+      
+}
+
+
+
+
+function IntToAscii(iXStartPosition, iYStartPosition){
+	
+		//var iXTextPosition = 0;
+        //var iYTextPosition = 0;
+		
+		var x = String.fromCharCode(iCounter);
+		
+		ctx.font = 'bold 40px Calibri';
+		ctx.fillStyle = "rgb(255, 255, 255)";
+
+		ctx.strokeStyle = 'white';
+		ctx.lineWidth   = 10;
+	    ctx.fillText(x, iXStartPosition, iYStartPosition);
+				
+	    //ctx.drawImage(creditNameMitchell, 50, 50, 200, 100);
+	    //ctx.drawImage(creditNameAlex,     50, 150, 200, 100);
+		//ctx.drawImage(creditNameNick,     50, 250, 200, 100);
+		
+		
+		if(bMitchellM == 0){
+		    //iStringPosition = sMitchellM.length;
+			
+			//change to a while
+			if(iStringPosition < sMitchellM.length){
+
+				if(x == sMitchellM.charAt(iStringPosition)){
+					
+					ctx.font = 'bold 40px Calibri';
+				    ctx.fillStyle = "rgb(255, 255, 255)";
+				    ctx.strokeStyle = 'white';
+		            ctx.lineWidth   = 10;
+	                ctx.fillText(x, iXTextPosition, iYTextPosition);
+	                
+	                
+	                
+	                aMitchellM[iStringPosition] = x;         
+	                
+	                iXTextPosition += 40;
+	                iCounter = 32;
+	                iStringPosition++;
+	                
+	                
+	                ctx.font = 'bold 40px Calibri';
+				    ctx.fillStyle = "rgb(255, 255, 255)";
+				    ctx.strokeStyle = 'white';
+		            ctx.lineWidth   = 10;
+	                ctx.fillText(aMitchellM, 50, 50);
+	                
+				}
+				
+				else if(iCounter != sMitchellM.charAt(iStringPosition)){
+					iCounter++;
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		if(bJasonA == 0){
+			
+		}
+		
+		if(bAlexS == 0){
+			
+		}
+		
+		if(bNickH == 0){
+			
+		}
+		
+		if(bJesseK == 0)
+		{
+		
+		   iCounter++;
+		}
+		
+		
+		
+		
+		//if(iCounter <= iCounterMax)
+		//{
+		//	iCounter = iCounterMin;
+		//}
+	
+}
+

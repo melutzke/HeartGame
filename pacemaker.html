@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <head>
-<script type = "text/javascript" src="./pacemaker_map2.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+<script type = "text/javascript" src="./pacemaker_map.js"></script>
 <script type = "text/javascript" src="./world_objects.js"></script>
-<script type = "text/javascript" src="./gamepad.js"></script>
 <script type = "text/javascript" src="./setup.js"></script>
 <script type = "text/javascript" src="./events.js"></script>
 <script type = "text/javascript" src="./button.js"></script>
 <script type = "text/javascript" src="./rendering.js"></script>
+<link href = "style.css" rel = "stylesheet" type = "stylesheet"> </link>
 <script type = "text/javascript">
 
 var fps = 60, now, lastUpdate = (new Date)*1 - 1, fpsControl = 1, x, y;
@@ -85,6 +86,17 @@ function Game(ctx, x_boundary, y_boundary, frame_delay){
 	}
 }
 
+function screenClear(currentGame){ 
+	ctx.fillStyle = currentGame.clearColor;
+	ctx.fillRect(0, 0, currentGame.x_boundary, currentGame.y_boundary);
+	return true;
+}
+		////////////////////////////////////////////////////////////////////////////////////////// AVOID THIS SHIT
+function drawObject(drawableObject, ctx){
+	ctx.drawImage(drawableObject.image, Math.round(drawableObject.x), Math.round(drawableObject.y), drawableObject.width, drawableObject.height);
+	return true;
+}
+
 
 
 	////////////////////////////////////////////////////////////////////////////////////////// UP DRAWN TO SCREEN
@@ -127,10 +139,7 @@ function frame(){
 
 	if(document.activeElement.id == "draw_canvas" && windowActive){
 		///////////////////////////////////////////////////////////////////////////////////// UPDATE DAT CHAR
-		
-		if (PlayerGame.state == GAMESTATE_GAMEPLAY) {
-			CurrPlayer.update();
-		}
+		CurrPlayer.update();
 	}
 	
 	screenClear(PlayerGame);
@@ -138,6 +147,7 @@ function frame(){
 	//window.requestAnimationFrame(frame);
 	gametimeout = setTimeout(frame, 16);
 	draw_world();
+
 
 	// IGNORE FRAME STUFF, it is used for accurate movement / fps counter
 	thisFrameFPS = 1000 / ((now=new Date) - lastUpdate);
@@ -153,8 +163,8 @@ function frame(){
 	lastUpdate = now;
 	fpsControl = 60/thisFrameFPS;
 	fpsWave = 60/thisFrameFPS;
-}
 
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////// IGNORE THESE
