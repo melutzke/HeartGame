@@ -276,10 +276,6 @@ function Player(x_pos, y_pos) {
 					this.airtime = 0;
 					this.y_speed = 0;
 					this.grounded = true;
-					if(platforms[i].type == 4){
-						this.dead = true;
-						this.y += 20; // impale him a bit
-					}
 				} else {
 					if(grav_const == 1){
 						this.airtime = 4.5;
