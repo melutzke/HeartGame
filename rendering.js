@@ -30,15 +30,15 @@ function draw_game() {
 	drawUI(ctx);
 
 		////////////////////////////////////////////////////////////////////////////////////////// DRAW BUTTON
-	Button_Gameplay_Reset.draw();
-	Button_Gameplay_Options.draw();
+	//Button_Gameplay_Reset.draw();
+	//Button_Gameplay_Options.draw();
 
 	//**************************************************************************************************** Buttons
-	if(Button_Gameplay_Reset.clicked()){
+	if(Button_Gameplay_Reset.update()){
 		PlayerGame.resetGame();
 	}
 
-	if(Button_Gameplay_Options.clicked()){
+	if(Button_Gameplay_Options.update()){
 		PlayerGame.state = GAMESTATE_OPTIONS;
 	}
 		////////////////////////////////////////////////////////////////////////////////////////// DRAW SEXY GRID
@@ -75,9 +75,9 @@ function draw_world() {
 	} else if(PlayerGame.state == GAMESTATE_OPTIONS){
 
 		ctx.drawImage(optionsScreen, 0, 0);
-		Button_Options_Start.draw();
+		Button_Options_Start.update();
 
-		if(Button_Options_Start.clicked()){
+		if(Button_Options_Start.update()){
 			PlayerGame.resetGame();              //reset the game so that you don't start a game at your previous progress/death
 			PlayerGame.state = GAMESTATE_START;
 		}
@@ -86,26 +86,19 @@ function draw_world() {
 
 	else if(PlayerGame.state == GAMESTATE_START){
 		ctx.drawImage(startScreen, 0, 0);
-		Button_Start_Options.draw();
-		Button_Start_Credits.draw();
-		Button_Start_Play.draw();
 
 
-		if(Button_Start_Play.clicked()){
-			PlayerGame.state = GAMESTATE_GAMEPLAY;
-					
+		if(Button_Start_Play.update()){
+			PlayerGame.state = GAMESTATE_GAMEPLAY;			
 		}	
 		
-		
-		if(Button_Start_Credits.clicked())
-		{
+		if(Button_Start_Credits.update()){
 			PlayerGame.state = GAMESTATE_CREDITS;	
 		}
 		
+		if(Button_Start_Options.update()){
+			PlayerGame.state = GAMESTATE_OPTIONS;			
 
-		if(Button_Start_Options.clicked()){
-			PlayerGame.state = GAMESTATE_OPTIONS;
-					
 		}	
 
 	}else if(PlayerGame.state == GAMESTATE_CREDITS){
@@ -116,6 +109,7 @@ function draw_world() {
 	    ctx.drawImage(creditNameAlex,     50, 150, 200, 100);
 		ctx.drawImage(creditNameNick,     50, 250, 200, 100);
 		//right side
+
         ctx.drawImage(creditNameJason, 350, 125, 200, 100);
         ctx.drawImage(creditNameJesse, 350, 300, 200, 100);
 
@@ -147,7 +141,8 @@ function draw_world() {
 		
 		Button_Credits_MainMenu.draw();
 
-		if(Button_Credits_MainMenu.clicked()){
+
+		if(Button_Credits_MainMenu.update()){
 			PlayerGame.state = GAMESTATE_START;
 		}
 		

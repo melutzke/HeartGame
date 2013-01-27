@@ -147,6 +147,85 @@ background2.src = 			"./Images/test_background2.png";
 	////////////////////////////////////////////////////////////////////////////////////////// SETTING THINGS UP INITIALLY
 function begin_game() {
 
+
+	Controller = new Control();
+
+gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
+    // a new gamepad connected
+});
+
+gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {
+    // gamepad disconnected
+});
+
+gamepad.bind(Gamepad.Event.UNSUPPORTED, function(device) {
+    // an unsupported gamepad connected (add new mapping)
+});
+
+
+gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
+    // gamepads were updated (around 60 times a second)
+
+	for (control in gamepads[0].state) {
+		//value = gamepads[i].state[control];
+		
+		if(gamepads[0].state['A']){
+			ControllerUse = true;
+			Controller.space = true;
+		} else if(gamepadSupport && ControllerUse){
+			Controller.space = false;
+		}
+
+		if(gamepads[0].state['X']){
+			ControllerUse = true;
+			Controller.shift = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.shift = false;
+		}
+
+		if(gamepads[0].state['DPAD_LEFT']){
+			ControllerUse = true;
+			Controller.left = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.left = false;
+		}
+
+		if(gamepads[0].state['DPAD_RIGHT']){
+			ControllerUse = true;
+			Controller.right = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.right = false;
+		}
+
+		if(gamepads[0].state['DPAD_UP']){
+			ControllerUse = true;
+			Controller.up = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.up = false;
+		}
+
+		if(gamepads[0].state['DPAD_DOWN']){
+			ControllerUse = true;
+			Controller.down = true;
+		} else if(gamepadSupport && ControllerUse) {
+			Controller.down = false;
+		}
+	}
+
+
+
+});
+
+if (!gamepad.init()) {
+    gamepadSupport = false;
+}
+
+
+
+console.log(gamepad);
+
+
+
 	canvas = document.getElementById("draw_canvas");
 	ctx = canvas.getContext("2d");
 
@@ -191,19 +270,19 @@ function begin_game() {
 
 	//Syntax for buttons --> What Gamestate it is at _ What Gamestate it is going to
 	//GAMESTATE_START
-	Button_Start_Play = new Button(916, 280, 120, 50, "Play Game", ctx, true);
-	Button_Start_Options = new Button(856, 355, 180, 50, "Options", ctx, true);
-	Button_Start_Credits = new Button(876, 430, 160, 50, "Credz", ctx, true);
+	Button_Start_Play = new Button(900, 280, 120, 50, "Play", ctx, false, "#000000");
+	Button_Start_Options = new Button(900, 355, 180, 50, "Options", ctx, false,"#000000");
+	Button_Start_Credits = new Button(900, 430, 160, 50, "Credz", ctx, false,"#000000");
 
 	//GAMESTATE_GAMEPLAY
-	Button_Gameplay_Reset = new Button(1000, 10, 120, 30, "Reset Game", ctx, false);
-	Button_Gameplay_Options = new Button(850, 10, 100, 30, "Options", ctx, false);
+	Button_Gameplay_Reset = new Button(900, 10, 120, 30, "Reset", ctx, false,"#FFFFFF");
+	Button_Gameplay_Options = new Button(1000, 10, 100, 30, "Options", ctx, false,"#FFFFFF");
 
 	//GAMESTATE_OPTIONS
-	Button_Options_Start = new Button(550, 500, 100, 30, "Main Menu", ctx, false);
+	Button_Options_Start = new Button(550, 500, 100, 30, "Menu", ctx, false, "#000000");
 
 	//GAMESTATE_CREDITS
-	Button_Credits_MainMenu = new Button(500, 500, 100, 30, "Main Menu", ctx, false);
+	Button_Credits_MainMenu = new Button(500, 500, 100, 30, "Menu", ctx, false,"#000000");
 
 	imageMap = new Array(map.length);
 

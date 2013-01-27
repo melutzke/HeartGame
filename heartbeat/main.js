@@ -136,7 +136,6 @@ function punch_right(){
 
 function key_down(e){
 	var target
-	console.log(e.keyCode);
 	if(!model.punchingLeft){
 	if(e.keyCode == 65){
 		punch_left();
@@ -150,7 +149,6 @@ function key_down(e){
 function mouse_move(e){
 	model.mouseX = e.clientX - model.canvas.offsetLeft;
 	model.mouseY = e.clientY - model.canvas.offsetTop;
-	
 }
 
 function mouse_down(e){

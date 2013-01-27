@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <head>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
 <script type = "text/javascript" src="./pacemaker_map.js"></script>
 <script type = "text/javascript" src="./world_objects.js"></script>
 <script type = "text/javascript" src="./setup.js"></script>
 <script type = "text/javascript" src="./events.js"></script>
 <script type = "text/javascript" src="./button.js"></script>
 <script type = "text/javascript" src="./rendering.js"></script>
+<link href = "style.css" rel = "stylesheet" type = "stylesheet"> </link>
 <script type = "text/javascript">
 
 var fps = 60, now, lastUpdate = (new Date)*1 - 1, fpsControl = 1, x, y;
@@ -161,8 +164,8 @@ function frame(){
 	lastUpdate = now;
 	fpsControl = 60/thisFrameFPS;
 	fpsWave = 60/thisFrameFPS;
-}
 
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////// IGNORE THESE
