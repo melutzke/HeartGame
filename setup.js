@@ -211,6 +211,37 @@ console.log(gamepad);
 	PlayerGame.clearColor = "rgb(135,206,235)";
 	CurrPlayer = new Player(50, 300);				// (x-position, y-position)
 
+
+
+
+		Ground = new Platform();					// 1 = ground
+		Ground.image = new Image();
+		Ground.image.src = "./Images/platform.fw.png";
+
+		Jump = new Platform();						// 2 = jump
+		Jump.image = new Image();
+		Jump.image.src = "./Images/jump.fw.png";
+
+		Duck = new Platform();						// 3 = duck
+		Duck.image = new Image();
+		Duck.image.src = "./Images/duck.fw.png";
+
+		Smash = new Platform();						// 5 = switch
+		Smash.image = new Image();
+		Smash.image.src = "./Images/smash.fw.png";
+
+		Switch = new Platform();					// 4 = smash
+		Switch.image = new Image();
+		Switch.image.src = "./Images/switch.fw.png";
+
+		Blood  = new Platform();					// 6 = collectable
+		Blood.image  = new Image();
+		Blood.image.src = "./Images/redbloodcell.png";
+
+
+
+
+
 	Grass = new Platform();
 	Grass.image = new Image();
 	Grass.image.src = "./Images/grass_tile.png";
@@ -268,15 +299,24 @@ console.log(gamepad);
 
 
 				if(map[i][k]==1){
-					imageMap[i][k] = Dirt.image;
+					imageMap[i][k] = Ground.image;
 				}
 				// handle blue platforms
 				if(map[i][k]==2){
-					imageMap[i][k] = Block.image;
+					imageMap[i][k] = Jump.image;
+				}
+				if(map[i][k]==3){
+					imageMap[i][k] = Duck.image;/////////////
 				}
 				// handle spikes and their tiling
 				if(map[i][k]==4){
-					imageMap[i][k] = Spike.image;
+					imageMap[i][k] = Smash.image;
+				}
+				if(map[i][k]==5){
+					imageMap[i][k] = Switch.image;//////////////
+				}
+				if(map[i][k]==6){
+					imageMap[i][k] = Blood.image;///////////////
 				}
 			
 		if(imageMap[i][k] == undefined) imageMap[i][k] = null;
@@ -286,10 +326,10 @@ console.log(gamepad);
 	////////////////////////////////////////////////////////////////////////////////////////// SEND COLLECTABLES TO AN ARRAY FROM MAP FILE
 	for(var i = 0; i<map.length; i++){
 		for(var k = 0; k<map[i].length; k++){
-			if(map[i][k]!=0 && map[i][k]!=3 && map[i][k] != 5){
+			if(map[i][k]!=0 && map[i][k] != 6){
 				platforms.push(new Platform(k*blocksize, i*blocksize, map[i][k]));
 			}
-			if(map[i][k]==3){
+			if(map[i][k]==6){
 				collectable.push(new Item(k*blocksize, i*blocksize));
 			}
 		}
