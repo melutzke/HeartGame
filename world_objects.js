@@ -183,7 +183,7 @@ function Player(x_pos, y_pos) {
 			console.log(this.grounded)
 		
 			this.airtime += 0.24*fpsControl;
-			if(this.airtime > .9){
+			if(this.airtime > 1.1){
 					this.rotation+=.1
 			}
 		} 
@@ -199,7 +199,7 @@ function Player(x_pos, y_pos) {
 
 		// loop through each collectable item. If the dist between it and character is small, collect it
 		for(var i = 0; i<collectable.length; i++){
-			if(distanceBetween(this, collectable[i]) < 30){
+			if(distanceBetween(this, collectable[i]) < this.height/2){
 				collectable[i].hidden = true;
 				collectable_count++;
 				collectable.splice(i, 1);
@@ -216,9 +216,11 @@ function Player(x_pos, y_pos) {
 		// change to facing right image if moving right, or not moving
 		if(this.x_dir == 1 || this.x_dir == 0){
 			if(this.walk_switch && this.airtime < 0.5){
+				this.rotation = 0;
 				this.image = char_right_second;
 			} else if (this.airtime < 0.5){
 				this.image = char_right;
+				this.rotation = 0;
 			} else {
 				this.image = char_right_jump;
 			}
@@ -226,7 +228,9 @@ function Player(x_pos, y_pos) {
 			// change to facing left image if moving left
 			if(this.walk_switch && this.airtime < 0.5){
 				this.image = char_left_second;
+				this.rotation = 0;
 			} else if(this.airtime < 0.5) {
+				this.rotation = 0;
 				this.image = char_left;
 			} else {
 				this.image = char_left_jump;
