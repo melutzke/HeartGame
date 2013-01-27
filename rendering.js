@@ -76,7 +76,7 @@ function drawObject(drawableObject, ctx){
 	ctx.translate(drawableObject.x,drawableObject.y);
 	//ctx.translate(drawableObject.width/2,drawableObject.height/2)
 	ctx.rotate(drawableObject.rotation) ;
-	ctx.drawImage(drawableObject.image, -drawableObject.width/2, -drawableObject.height/2, drawableObject.width, drawableObject.height);
+	ctx.drawImage(drawableObject.image, 0, 0, drawableObject.width, drawableObject.height);
 	ctx.restore();	
 	return true;
 }
