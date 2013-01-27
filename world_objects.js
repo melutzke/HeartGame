@@ -33,8 +33,8 @@ function Player(x_pos, y_pos) {
 	this.speed = 5;			// speed (in pixels per frame)
 	this.airtime = 0;		// time bucky has been in the air (used for falling)
 	this.image = new Image();
-	this.width = 64;		// collision width of bucky (so he overlaps things a bit)
-	this.height = 80;		// collision height of bucky (so he overlaps things a bit)
+	this.width = 100;		// collision width of bucky (so he overlaps things a bit)
+	this.height = 100;		// collision height of bucky (so he overlaps things a bit)
 	this.grounded = false;
 	this.grounded_last_frame = false;
 	this.jump_hold_toggle = false;
