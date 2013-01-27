@@ -210,6 +210,15 @@ gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
 		} else if(gamepadSupport && ControllerUse) {
 			Controller.down = false;
 		}
+
+		if(gamepads[0].state['START'] && !pauseToggle){
+			ControllerUse = true;
+			Controller.p = !Controller.p;
+			pauseToggle = true;
+		}
+		if(!gamepads[0].state['START']){
+			pauseToggle = false;
+		}
 	}
 
 
