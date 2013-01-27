@@ -21,7 +21,7 @@ var collectable = new Array();
 var grav_const = 1;
 var gamepadSupport = true;
 
-var debug = true;
+var debug = false;
 var grid = false;
 
 var fpsWave = 60;
@@ -314,9 +314,6 @@ console.log(gamepad);
 				}
 				if(map[i][k]==5){
 					imageMap[i][k] = Switch.image;//////////////
-				}
-				if(map[i][k]==6){
-					imageMap[i][k] = Blood.image;///////////////
 				}
 			
 		if(imageMap[i][k] == undefined) imageMap[i][k] = null;
