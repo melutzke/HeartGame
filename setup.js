@@ -21,7 +21,7 @@ var collectable = new Array();
 var grav_const = 1;
 var gamepadSupport = true;
 
-var debug = false;
+var debug = true;
 var grid = false;
 
 var fpsWave = 60;

@@ -118,8 +118,11 @@ function Player(x_pos, y_pos) {
 			// This overrides the code for controlling x speed with keys, as the new game autoscales
 			// WE CAN REMOVE THE CODE ABOE INCREMENTALLY AS WE WANT TO CLEAN STUFF UP
 			
-			this.x_speed = 10;
-			this.x_dir = 1;
+			if(!debug){
+				this.x_speed = 10;
+				this.x_dir = 1;
+			}
+			
 		
 		}
 		
