@@ -45,6 +45,17 @@ function Glove(xpos,ypos){
 	this.height = model.gloves.defaultSize;
 }
 
+// disable right click menu
+(function () {
+	  var blockContextMenu, myElement;
+
+	    blockContextMenu = function (evt) {
+			    evt.preventDefault();
+				  };
+
+	window.addEventListener('contextmenu', blockContextMenu);
+})();
+
 function update(){
 	model.time+=.1;
 	model.worldOffset = (model.canvas.width/2 - model.mouseX)/10;
@@ -113,18 +124,26 @@ var resetFist = function(){
 //65 - left
 //68 - right
 
+function punch_left(){
+	TweenLite.to(model.gloves.left, .15, {width:75,height:75, xpos:model.canvas.width/2,  onComplete: resetFist});
+	model.punchingLeft = true;
+}
+
+function punch_right(){
+	TweenLite.to(model.gloves.right, .15, {width:75,height:75, xpos:model.canvas.width/2, onComplete : resetFist});
+	model.punchingRight = true;
+}
+
 function key_down(e){
 	var target
 	console.log(e.keyCode);
 	if(!model.punchingLeft){
 	if(e.keyCode == 65){
-		TweenLite.to(model.gloves.left, .15, {width:75,height:75, xpos:model.canvas.width/2,  onComplete: resetFist});
-		model.punchingLeft = true;
+		punch_left();
 	}}
 	if(!model.punchingRight){
 	if(e.keyCode == 68){
-		TweenLite.to(model.gloves.right, .15, {width:75,height:75, xpos:model.canvas.width/2, onComplete : resetFist});
-		model.punchingRight = true;
+		punch_right();
 	}}
 }
 
@@ -132,6 +151,22 @@ function mouse_move(e){
 	model.mouseX = e.clientX - model.canvas.offsetLeft;
 	model.mouseY = e.clientY - model.canvas.offsetTop;
 	
+}
+
+function mouse_down(e){
+	switch (e.which) {
+        case 1:
+			punch_left();
+            break;
+        case 2:
+            break;
+        case 3:
+			punch_right();
+            //alert('Right mouse button pressed');
+            break;
+        default:
+            //alert('You have a strange mouse');
+    }
 }
 
 function init(){
@@ -163,8 +198,9 @@ function init(){
 
 
 
-	document.addEventListener("mousemove", mouse_move)
-	document.addEventListener("keydown",key_down)
+	document.addEventListener("mousemove", mouse_move);
+	document.addEventListener("mousedown", mouse_down);
+	document.addEventListener("keydown",key_down);
 	model.canvas = document.getElementById("canv");
 	model.ctx = model.canvas.getContext("2d");
 
