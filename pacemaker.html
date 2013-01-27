@@ -80,6 +80,7 @@ function Game(ctx, x_boundary, y_boundary, frame_delay){
 		platform_x_movement = 0;
 		platforms = new Array();
 		platform_update = 0;
+		grav_const = 1;
 		begin_game();
 		clearTimeout(gametimeout);
 	}
